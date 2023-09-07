@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends "sumgpt/base.html" %}
+
+{% block title_block %}
+Speech
+{% endblock %}
+
+{% block body_block %}
+<h1>Speech To Text</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">開始</button>
+    </form>
+
+<h2>文字起こしの結果</h2>
+<p>{{ transcribe_result }}</p>
+{% endblock %}
