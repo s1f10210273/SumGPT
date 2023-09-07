@@ -8,6 +8,18 @@ Login
 {% block body_block %}
 <div class="position-relative" style="height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #f5f5f5;">
     <div class="position-absolute top-50 start-50 translate-middle" style="width: 400px;">
+        {% if form.errors %}
+        <div class="alert alert-danger fade show" role="alert">
+            <strong>エラーが発生しました：</strong>
+            <ul>
+                {% for field, error_list in form.errors.items %}
+                {% for error in error_list %}
+                <li>{{ error }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
         <div class="card shadow-sm">
             <div class="m-3">
                 <h2 class="text-center mb-4 bold-text">SumGPT</h2>
