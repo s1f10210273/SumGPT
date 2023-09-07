@@ -1,17 +1,35 @@
 <!DOCTYPE html>
-{% extends "sumgpt/base.html" %}
+{% extends "sumgpt/base2.html" %}
 
 {% block title_block %}
 Login
 {% endblock %}
 
 {% block body_block %}
-<h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.username.label_tag }} {{ form.username }}
-        {{ form.password.label_tag }} {{ form.password }}
-        <button type="submit">Login</button>
-    </form>
-    <a href="{% url 'signup' %}" class="btn btn-primary" role="button">Sign up</a>
+<div class="position-relative" style="height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #f5f5f5;">
+    <div class="position-absolute top-50 start-50 translate-middle" style="width: 400px;">
+        <div class="card shadow-sm">
+            <div class="m-3">
+                <h2 class="text-center mb-4 bold-text">SumGPT</h2>
+                <form method="post" action="{% url 'login' %}" class="form-group">
+                    {% csrf_token %}
+                    {% for item in form %}
+                    <div class="form-group m-2">
+                        <label for="{{item.id_for_label}}">{{item.label}}</label>
+                        <input type="{{item.field.widget.input_type}}" class="form-control"
+                            {% if item.field.required %}required{% endif %} name="{{item.name}}"
+                            id="{{item.id_for_label}}">
+                    </div>
+                    {% endfor %}
+                    <div class="text-center mt-4">
+                        <button type="submit" class="submit btn btn-primary">ログイン</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <p class="text-center">アカウントをお持ちでない方は<a href="{% url 'signup' %}" style="text-decoration: none;">こちら</a></p>
+    </div>
+</div>
+
+
 {% endblock %}
