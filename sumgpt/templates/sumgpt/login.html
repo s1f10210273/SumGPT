@@ -13,4 +13,5 @@ Login
         {{ form.password.label_tag }} {{ form.password }}
         <button type="submit">Login</button>
     </form>
+    <a href="{% url 'signup' %}" class="btn btn-primary" role="button">Sign up</a>
 {% endblock %}
