@@ -15,7 +15,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('auth/signup')
+            return redirect('signup')
     else:
         form = UserForm()
     return render(request, 'sumgpt/signup.html', {'form': form})
