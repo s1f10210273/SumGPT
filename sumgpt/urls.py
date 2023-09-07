@@ -1,5 +1,5 @@
 from django.urls import path
-from .view import auth
+from .view import auth, speech
 from . import views
 
 urlpatterns = [
@@ -8,5 +8,12 @@ urlpatterns = [
     #viewフォルダ内のauth.pyでviewを設定
     path("auth/signup", auth.signup, name="signup"),
     path("auth/login", auth.login_view, name="login"),
-
+    path("speech", speech.index, name="speech"),
 ]
+
+#文字起こし機能のファイル削除用
+from django.conf.urls.static import static
+from django.conf import settings
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
