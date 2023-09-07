@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-{% extends "sumgpt/base.html" %}
+{% extends "sumgpt/base2.html" %}
 
 {% block title_block %}
-INDEX
+index
 {% endblock %}
 
 {% block body_block %}
-<h1>Welcome</h1>
-<h2>Hello World</h2>
+<div class="container mt-5 d-flex justify-content-center align-items-center vh-100">
+    <div class="text-center">
+        <h1 class="display-4 bold-text">Welcome to SumGPT</h1>
+        <div class="mt-4">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'mypage' %}" class="btn btn-primary" role="button">マイページ</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary" role="button">ログイン</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!--機能説明をしていきたい-->
+
+
 {% endblock %}
