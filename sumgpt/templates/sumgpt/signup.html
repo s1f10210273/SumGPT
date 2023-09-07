@@ -6,10 +6,10 @@ Signup
 {% endblock %}
 
 {% block body_block %}
-<h2>Register</h2>
+<h2>Signup</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Register</button>
+    <button type="submit">登録</button>
 </form>
 {% endblock %}
