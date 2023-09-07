@@ -6,14 +6,50 @@ Mypage
 {% endblock %}
 
 {% block body_block %}
-<h2>マイページ</h2>
-<p>ようこそ、{{ user.username }}さん</p>
-<h2>パスワード変更</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">パスワードを変更</button>
-</form>
+<div class="m-5">
+    <h1 class="bold-text text-center">こんにちは、{{ user.username }}さん</h1>
+    <div class="text-center mt-4">
+        <a href="{% url 'logout' %}" class="btn btn-primary" role="button">ログアウト</a>
+    </div>
+    <hr class="m-4">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
 
-<a href="{% url 'logout' %}" class="btn btn-primary" role="button">logout</a>
+                <h2 class="bold-text text-center mb-4">パスワード変更</h2>
+
+                {% if form.errors %}
+                <div class="alert alert-danger fade show" role="alert">
+                    <strong>エラーが発生しました：</strong>
+                    <ul>
+                        {% for field, error_list in form.errors.items %}
+                        {% for error in error_list %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'mypage' %}" class="form-group">
+                    {% csrf_token %}
+                    {% for item in form %}
+                    <div class="form-group mb-3">
+                        <!-- マージンを追加 -->
+                        <label for="{{item.id_for_label}}">{{item.label}}</label>
+                        <input type="{{item.field.widget.input_type}}" class="form-control"
+                            {% if item.field.required %}required{% endif %} name="{{item.name}}"
+                            id="{{item.id_for_label}}">
+                    </div>
+                    {% endfor %}
+                    <div class="text-center">
+                        <button type="submit" class="submit btn btn-primary">変更</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}
