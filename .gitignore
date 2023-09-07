@@ -1,3 +1,5 @@
 #仮想環境のフォルダを除外
 #環境構築時には[python3 -m venv venv]を実行
 venv/
+
+*.pyc
