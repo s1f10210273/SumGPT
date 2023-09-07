@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends "sumgpt/base.html" %}
+
+{% block title_block %}
+Mypage
+{% endblock %}
+
+{% block body_block %}
+<h2>マイページ</h2>
+<p>ようこそ、{{ user.username }}さん</p>
+<h2>パスワード変更</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">パスワードを変更</button>
+</form>
+
+<a href="{% url 'logout' %}" class="btn btn-primary" role="button">logout</a>
+{% endblock %}

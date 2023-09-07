@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, update_session_auth_hash
+from django.contrib import messages
 from ..forms import UserForm, LoginForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 #サインアップ・ログイン機能
@@ -32,3 +35,19 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request, 'sumgpt/login.html', {'form': form})
+
+
+
+@login_required
+def mypage(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # セッションの認証ハッシュを更新
+            messages.success(request, 'パスワードが変更されました。')
+            return redirect('change_password')
+    else:
+        form = PasswordChangeForm(request.user)
+
+    return render(request, 'sumgpt/mypage.html', {'form': form})
