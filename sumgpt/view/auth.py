@@ -46,7 +46,7 @@ def mypage(request):
             user = form.save()
             update_session_auth_hash(request, user)  # セッションの認証ハッシュを更新
             messages.success(request, 'パスワードが変更されました。')
-            return redirect('change_password')
+            return redirect('login')
     else:
         form = PasswordChangeForm(request.user)
 
