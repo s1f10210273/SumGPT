@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% extends "sumgpt/base.html" %}
+
+{% block title_block %}
+index
+{% endblock %}
+
+{% block body_block %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <div class="mb-3">
+                <button id="startButton" class="btn btn-primary" onclick="startrec()">音声認識開始</button>
+                <button id="stopButton" class="btn btn-danger" onclick="stoprec()" style="display:none;">音声認識終了</button>
+                <button id="rec" class="btn btn-danger" type="button" disabled style="display:none;">
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    録音中
+                </button>
+            </div>
+            <div class="mb-3">
+                <textarea id="re" class="form-control" cols="30" rows="10" disabled></textarea>
+            </div>
+            <div id="transcription" class="mt-3"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let recognition = null;
+    let isRecognizing = false;
+    let resu = '';
+
+    function startrec() {
+        if (!isRecognizing) {
+            const startButton = document.getElementById('startButton');
+            const stopButton = document.getElementById('stopButton');
+            const rec = document.getElementById('rec');
+
+            startButton.style.display = 'none';
+            stopButton.style.display = 'inline-block';
+            rec.style.display = 'inline-block';
+
+            recognition = new webkitSpeechRecognition();
+            recognition.lang = 'ja-JP';
+            recognition.interimResults = true;
+
+            recognition.onresult = function (event) {
+                const result = event.results[0][0].transcript;
+                resu = result;
+                document.getElementById('transcription').textContent = result;
+            };
+
+            recognition.onerror = function (event) {
+                console.error('音声認識エラー:', event.error);
+            };
+
+            recognition.onend = function () {
+                isRecognizing = false;
+                document.getElementById('re').value += resu + "\n";
+
+                startButton.style.display = 'inline-block';
+                stopButton.style.display = 'none';
+                rec.style.display = 'none';
+            };
+
+            recognition.start();
+            isRecognizing = true;
+        }
+    }
+
+    function stoprec() {
+        if (recognition) {
+            recognition.stop();
+            isRecognizing = false;
+        }
+    }
+</script>
+
+
+{% endblock %}
