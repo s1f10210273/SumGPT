@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% extends "sumgpt/base.html" %}
+
+{% block title_block %}
+sp
+{% endblock %}
+
+{% block body_block %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="text-center">
+                <h1 class="mb-4">要約</h1>
+                    <textarea class="form-control" rows="5">{{ input_data }}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -13,6 +13,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
     path("speech", speech.index, name="speech"),
     path("SpeechRecognition", SpeechRecognition.index, name="SpeechRecognition"),
+    path("sp", SpeechRecognition.sp, name="sp"),
 ]
 
 #文字起こし機能のファイル削除用
