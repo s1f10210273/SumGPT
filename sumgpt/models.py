@@ -9,6 +9,11 @@ class Doc(models.Model):
     def __str__(self):
         return self.url
 
+#要約データ保存用
+class Sum(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    sum = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 #文字起こし用のテーブル作成
 class Upload(models.Model):

@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from ..models import Sum
 import openai
 
 def index(request):
@@ -25,6 +26,16 @@ def sp(request):
             ],
         )
         speech_result = response['choices'][0]['message']['content']
+
+        # データを保存
+        user = request.user
+        Sum.objects.create(user=user, sum=speech_result)
+
         return render(request, 'sumgpt/sp.html', {'input_data': speech_result})
     else:
         return render(request, 'sumgpt/sp.html')
+
+
+def sum(request, pk):
+    sum_data = get_object_or_404(Sum, pk=pk)  # SumモデルとデータのIDを指定
+    return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
