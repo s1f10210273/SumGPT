@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .view import auth, speech
+from .view import auth, speech, SpeechRecognition
 from . import views
 
 urlpatterns = [
@@ -12,6 +12,8 @@ urlpatterns = [
     path("auth/mypage", auth.mypage, name="mypage"),
     path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
     path("speech", speech.index, name="speech"),
+    path("SpeechRecognition", SpeechRecognition.index, name="SpeechRecognition"),
+    path("sp", SpeechRecognition.sp, name="sp"),
 ]
 
 #文字起こし機能のファイル削除用

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% extends "sumgpt/base.html" %}
+
+{% block title_block %}
+index
+{% endblock %}
+
+{% block body_block %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <div class="mb-3">
+                <button id="startButton" class="btn btn-primary">音声認識開始</button>
+                <button id="stopButton" class="btn btn-danger" style="display:none;">音声認識終了</button>
+                <button id="rec" class="btn btn-danger" type="button" disabled style="display:none;">
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    録音中
+                </button>
+            </div>
+            <div class="mb-3">
+                <form method="post" action="{% url 'sp' %}">
+                {% csrf_token %}
+                <textarea name="data" id="re" class="form-control" cols="30" rows="10" readonly></textarea>
+                <button type="submit" id="sumButton" class="btn btn-danger" style="display:none;">要約</button>
+            </form>
+            </div>
+            <div id="transcription" class="mt-3"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+        let isRecognizing = false;
+        //APIの初期設定
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'ja-JP';
+        recognition.interimResults = true;
+        recognition.continuous = true;
+
+        //DOM要素の読み込み
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const rec = document.getElementById('rec');
+        const sumButton = document.getElementById('sumButton');
+        const re = document.getElementById('re');
+
+        //スタートボタンがクリックされた時の操作
+        startButton.addEventListener('click', () => {
+            isRecognizing = false;
+            if (!isRecognizing) {
+                recognition.start();
+                //下の関数の呼び出し
+                startrec();
+                startButton.style.display = 'none';
+                stopButton.style.display = 'inline-block';
+                rec.style.display = 'inline-block';
+            }
+        });
+
+        //ストップボタンがクリックされた時の操作
+        stopButton.addEventListener('click', () => {
+            //下の関数の呼び出し
+            stoprec();
+        });
+
+        function startrec() {
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+                let finalTranscript = '';
+
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const transcript = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        finalTranscript += transcript + '\n';
+                    } else {
+                        interimTranscript += transcript + ' ';
+                    }
+                }
+
+                document.getElementById('transcription').textContent = interimTranscript.trim();
+                re.value = (re.value + finalTranscript).trim() + "\n";
+    }
+}
+
+        function stoprec() {
+            recognition.stop();
+            startButton.style.display = 'inline-block';
+            stopButton.style.display = 'none';
+            rec.style.display = 'none';
+            isRecognizing = true;
+            if (re.value != '') {
+            sumButton.style.display = 'inline-block';
+            }
+        }
+
+</script>
+
+
+{% endblock %}
