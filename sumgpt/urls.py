@@ -14,6 +14,7 @@ urlpatterns = [
     path("speech", speech.index, name="speech"),
     path("SpeechRecognition", SpeechRecognition.index, name="SpeechRecognition"),
     path("sp", SpeechRecognition.sp, name="sp"),
+    path('sum/<int:pk>/', SpeechRecognition.sum, name='sum'),
 ]
 
 #文字起こし機能のファイル削除用

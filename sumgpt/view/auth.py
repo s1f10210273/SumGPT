@@ -4,6 +4,7 @@ from django.contrib import messages
 from ..forms import UserForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from ..models import Sum
 
 
 #サインアップ・ログイン機能
@@ -49,5 +50,6 @@ def mypage(request):
             return redirect('login')
     else:
         form = PasswordChangeForm(request.user)
+    user_sums = Sum.objects.filter(user=request.user)
 
-    return render(request, 'sumgpt/mypage.html', {'form': form})
+    return render(request, 'sumgpt/mypage.html', {'form': form, 'user_sums': user_sums})
