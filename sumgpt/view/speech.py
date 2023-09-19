@@ -31,6 +31,21 @@ def index(request):
             text = r.recognize_google(audio, language='ja-JP')
             speech_result = text
 
+            #以下要約機能。API叩くのめんどくさいから一回省略
+
+            # openai.api_key = "32utDwbskjvX2F5_XYnuw3sgF60QgwqefnVF6ZNqbx0eJNLg2Uxi4oumhRLcrWFbELVrE3J6u76tn5YPnQXtGTw"
+            # openai.api_base = "https://api.openai.iniad.org/api/v1"
+
+            # question = '次の文章を意味がわかるように簡潔に要約して\n' + text
+
+            # response = openai.ChatCompletion.create(
+            #     model="gpt-3.5-turbo",
+            #     messages=[
+            #         {"role": "user", "content": question},
+            #     ],
+            # )
+            # speech_result = response['choices'][0]['message']['content']
+
         else:
             speech_result = "wavファイルのみ"
 
