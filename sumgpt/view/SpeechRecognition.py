@@ -1,20 +1,23 @@
 from django.shortcuts import render, get_object_or_404
 from ..models import Sum
 import openai
+import os
+from dotenv import load_dotenv
+
+# .envファイルを読み込む
+load_dotenv()
 
 def index(request):
 
     return render(request, 'sumgpt/SpeechRecognition.html')
 
 
-from django.shortcuts import render
-
 def sp(request):
     if request.method == 'POST':
         input_data = request.POST.get('data', '')
 
 
-        openai.api_key = "32utDwbskjvX2F5_XYnuw3sgF60QgwqefnVF6ZNqbx0eJNLg2Uxi4oumhRLcrWFbELVrE3J6u76tn5YPnQXtGTw"
+        openai.api_key = os.getenv("OPENAI_API_KEY")
         openai.api_base = "https://api.openai.iniad.org/api/v1"
 
         question = '次の文章を簡潔に要約して\n' + input_data
