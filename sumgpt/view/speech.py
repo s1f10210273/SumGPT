@@ -1,6 +1,12 @@
 from django.shortcuts import render
 from django.conf import settings
 from ..forms import UploadForm
+import openai
+import os
+from dotenv import load_dotenv
+
+# .envファイルを読み込む
+load_dotenv()
 
 def index(request):
     import os
@@ -33,7 +39,8 @@ def index(request):
 
             #以下要約機能。API叩くのめんどくさいから一回省略
 
-            # openai.api_key = "32utDwbskjvX2F5_XYnuw3sgF60QgwqefnVF6ZNqbx0eJNLg2Uxi4oumhRLcrWFbELVrE3J6u76tn5YPnQXtGTw"
+
+            # openai.api_key = os.getenv("OPENAI_API_KEY")
             # openai.api_base = "https://api.openai.iniad.org/api/v1"
 
             # question = '次の文章を意味がわかるように簡潔に要約して\n' + text
