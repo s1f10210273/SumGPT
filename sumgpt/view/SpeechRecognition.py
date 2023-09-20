@@ -16,7 +16,10 @@ def sp(request):
     if request.method == 'POST':
         input_data = request.POST.get('data', '')
 
+        # 要約2で文字起こししたデータはinput_dataに入っています
+        # Google Docsと連携するときはこの下にコードを書くといい感じのはず
 
+        # ChatGPTでの要約
         openai.api_key = os.getenv("OPENAI_API_KEY")
         openai.api_base = "https://api.openai.iniad.org/api/v1"
 
@@ -30,11 +33,15 @@ def sp(request):
         )
         speech_result = response['choices'][0]['message']['content']
 
-        # データを保存
+        # dbに保存
         user = request.user
-        Sum.objects.create(user=user, sum=speech_result)
+        sum_instance = Sum.objects.create(user=user, sum=speech_result)
 
-        return render(request, 'sumgpt/sp.html', {'input_data': speech_result})
+        # 保存したインスタンスのIDを取得
+        saved_id = sum_instance.id
+        sum_data = get_object_or_404(Sum, pk=saved_id)
+
+        return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
     else:
         return render(request, 'sumgpt/sp.html')
 

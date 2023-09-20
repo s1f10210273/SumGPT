@@ -11,7 +11,7 @@ Mypage
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
-                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <div class="nav flex-column nav-pills me-3 custom-tabs" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
                         data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
                         aria-selected="true">要約一覧</button>
@@ -39,7 +39,7 @@ Mypage
                                 <tr>
                                     <td>{{ user_sum.timestamp|date:"Y-m-d" }}</td>
                                     <td class="text-truncate">{{ user_sum.sum|slice:":20" }}{% if user_sum.sum|length > 20 %}・・・{% endif %}</td>
-                                    <td><a href="{% url 'sum' user_sum.id %}" class="btn btn-dark btn-sm">詳細を表示</a></td>
+                                    <td><a href="{% url 'sum' user_sum.id %}" class="btn btn-secondary btn-sm">詳細を表示</a></td>
                                 </tr>
                                 {% empty %}
                                 <tr>
@@ -80,13 +80,81 @@ Mypage
                         </div>
                         {% endfor %}
                         <div class="text-center">
-                            <button type="submit" class="submit btn btn-primary">変更</button>
+                            <button type="submit" class="submit btn btn-secondary">変更</button>
                         </div>
                     </form>
+                    <div class="kakusi">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="darkModeSwitch">
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="fontSwitch">
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 </div>
+<script>
+    // ページが読み込まれたときにダークモードの状態を取得
+    var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+
+    // ダークモードスイッチのチェック状態を設定
+    document.getElementById('darkModeSwitch').checked = isDarkMode;
+
+    // ダークモードスイッチの変更イベントを監視
+    document.getElementById('darkModeSwitch').addEventListener('change', function () {
+        if (this.checked) {
+            document.body.setAttribute('data-bs-theme', 'dark');
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            document.body.removeAttribute('data-bs-theme');
+            localStorage.setItem('darkMode', 'disabled');
+        }
+    });
+</script>
+<script>
+    // ページが読み込まれたときにフォントスイッチの状態を取得
+    var isFontSwitchOn = localStorage.getItem('fontSwitch') === 'enabled';
+
+    // フォントスイッチのチェック状態を設定
+    document.getElementById('fontSwitch').checked = isFontSwitchOn;
+
+    // フォントスイッチの変更イベントを監視
+    document.getElementById('fontSwitch').addEventListener('change', function () {
+        if (this.checked) {
+            // チェックされている場合、フォントを変更
+            $('body').css('font-family', 'MyCustomFont, sans-serif');
+            localStorage.setItem('fontSwitch', 'enabled');
+        } else {
+            // チェックされていない場合、デフォルトのフォントに戻す
+            $('body').css('font-family', 'sans-serif');
+            localStorage.setItem('fontSwitch', 'disabled');
+        }
+    });
+</script>
+<script>
+    // ページが読み込まれたときにフォントスイッチの状態を取得
+    var isFontSwitchOn = localStorage.getItem('fontSwitch') === 'enabled';
+
+    // フォントスイッチのチェック状態を設定
+    document.getElementById('fontSwitch').checked = isFontSwitchOn;
+
+    // フォントスイッチの変更イベントを監視
+    document.getElementById('fontSwitch').addEventListener('change', function () {
+        if (this.checked) {
+            // チェックされている場合、フォントを変更
+            $('body').css('font-family', 'MyCustomFont, sans-serif');
+            localStorage.setItem('fontSwitch', 'enabled');
+        } else {
+            // チェックされていない場合、デフォルトのフォントに戻す
+            $('body').css('font-family', 'sans-serif');
+            localStorage.setItem('fontSwitch', 'disabled');
+        }
+    });
+</script>
+
 {% endblock %}

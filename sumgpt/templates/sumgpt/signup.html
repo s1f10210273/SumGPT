@@ -35,12 +35,12 @@ Signup
                     </div>
                     {% endfor %}
                     <div class="text-center mt-4">
-                        <button type="submit" class="submit btn btn-primary">登録</button>
+                        <button type="submit" class="submit btn btn-dark">登録</button>
                     </div>
                 </form>
             </div>
         </div>
-        <p class="text-center">既にアカウントをお持ちの方は<a href="{% url 'login' %}" style="text-decoration: none;">こちら</a></p>
+        <p class="text-center">既にアカウントをお持ちの方は<a href="{% url 'login' %}" class="text-secondary" style="text-decoration: none;">こちら</a></p>
     </div>
 </div>
 {% endblock %}

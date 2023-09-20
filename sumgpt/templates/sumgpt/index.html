@@ -11,13 +11,24 @@ index
         <h1 class="display-4 bold-text">Welcome to SumGPT</h1>
         <div class="mt-4">
             {% if request.user.is_authenticated %}
-            <a href="{% url 'mypage' %}" class="btn btn-primary" role="button">マイページ</a>
+            <a href="{% url 'mypage' %}" class="btn btn-secondary" role="button">マイページ</a>
             {% else %}
-            <a href="{% url 'login' %}" class="btn btn-primary" role="button">ログイン</a>
+            <a href="{% url 'login' %}" class="btn btn-secondary" role="button">ログイン</a>
             {% endif %}
         </div>
     </div>
 </div>
+<script>
+    // ページが読み込まれたときにダークモードの状態を取得
+    var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+
+    // ダークモードスイッチの状態に応じてdata-bs-theme属性を設定
+    if (isDarkMode) {
+        document.body.setAttribute('data-bs-theme', 'dark');
+    } else {
+        document.body.removeAttribute('data-bs-theme');
+    }
+</script>
 <!--機能説明をしていきたい-->
 
 
