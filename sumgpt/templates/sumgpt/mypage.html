@@ -44,7 +44,9 @@ Mypage
                                 </tr>
                                 {% empty %}
                                 <tr>
+                                    <td>none</td>
                                     <td>データがありません。</td>
+                                    <td><a href="{% url 'SpeechRecognition' %}" class="btn btn-secondary btn-sm">要約をする</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
