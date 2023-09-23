@@ -129,3 +129,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import os
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
 MEDIA_URL = '/upload/'
+
+
+import dotenv
+dotenv.load_dotenv()
