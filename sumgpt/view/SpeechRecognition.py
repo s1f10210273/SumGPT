@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from ..models import Sum
 import openai
 import os
@@ -49,3 +49,8 @@ def sp(request):
 def sum(request, pk):
     sum_data = get_object_or_404(Sum, pk=pk)  # SumモデルとデータのIDを指定
     return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
+
+#お知らせの削除
+def sum_del(request, pk):
+    Sum.objects.filter(id=pk).delete()
+    return redirect('mypage')
