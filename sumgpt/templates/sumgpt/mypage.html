@@ -31,6 +31,7 @@ Mypage
                                 <tr>
                                     <th scope="col">日時</th>
                                     <th scope="col">要約</th>
+                                    <th scope="col">詳細</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,7 +44,9 @@ Mypage
                                 </tr>
                                 {% empty %}
                                 <tr>
+                                    <td>none</td>
                                     <td>データがありません。</td>
+                                    <td><a href="{% url 'SpeechRecognition' %}" class="btn btn-secondary btn-sm">要約をする</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
