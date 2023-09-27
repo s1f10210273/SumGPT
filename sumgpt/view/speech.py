@@ -4,10 +4,12 @@ from ..forms import UploadForm
 import openai
 import os
 from dotenv import load_dotenv
+from django.contrib.auth.decorators import login_required
 
 # .envファイルを読み込む
 load_dotenv()
 
+@login_required
 def index(request):
     import os
     import subprocess

@@ -133,3 +133,5 @@ MEDIA_URL = '/upload/'
 
 import dotenv
 dotenv.load_dotenv()
+
+LOGIN_URL = 'auth/login'
