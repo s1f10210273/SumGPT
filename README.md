@@ -13,7 +13,7 @@ source venv/bin/activate
 ```
 windows
 ```
-./venv/script/activate
+./venv/Scripts/activate
 ```
 ### 3. 必要なライブラリのインストール
 音声文字起こし用のライブラリ
