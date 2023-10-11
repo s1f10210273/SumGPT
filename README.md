@@ -7,9 +7,13 @@
 python -m venv venv
 ```
 ### 2. 仮想環境に入る
-windowsだとコマンド違うかも
+mac
 ```
 source venv/bin/activate
+```
+windows
+```
+./venv/script/activate
 ```
 ### 3. 必要なライブラリのインストール
 音声文字起こし用のライブラリ
