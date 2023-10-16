@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .view import auth, speech, SpeechRecognition
+from .view import auth, speech, SpeechRecognition, drive
 from . import views
 
 urlpatterns = [
@@ -16,6 +16,7 @@ urlpatterns = [
     path("sp", SpeechRecognition.sp, name="sp"),
     path('sum/<int:pk>/', SpeechRecognition.sum, name='sum'),
     path('sum_del/<int:pk>/', SpeechRecognition.sum_del, name='sumdel'),
+    path('save_docs/<int:pk>/', drive.save_docs, name='savedocs'),
 ]
 
 #文字起こし機能のファイル削除用

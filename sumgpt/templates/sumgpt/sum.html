@@ -11,6 +11,8 @@
     <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.sum }}</textarea>
     <span class="badge rounded-pill text-bg-dark float-end">{{ sum_data.timestamp }}</span>
     <button class="btn btn-danger" id="deleteButton">削除</button>
+    <!-- googledocsに要約を保存-->
+    <a href="{% url 'savedocs' sum_data.id %}" class="btn btn-danger">Docs保存</a>
 </div>
 
 <!-- 確認ダイアログ用モーダル -->
