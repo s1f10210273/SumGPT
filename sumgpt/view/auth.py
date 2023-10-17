@@ -50,6 +50,12 @@ def mypage(request):
             return redirect('login')
     else:
         form = PasswordChangeForm(request.user)
-    user_sums = Sum.objects.filter(user=request.user)
+
+    search_query = request.GET.get('search_query', None)
+
+    if search_query:
+        user_sums = Sum.objects.filter(user=request.user, sum__icontains=search_query)
+    else:
+        user_sums = Sum.objects.filter(user=request.user)
 
     return render(request, 'sumgpt/mypage.html', {'form': form, 'user_sums': user_sums})
