@@ -7,6 +7,7 @@ Mypage
 
 {% block body_block %}
 <h1 class="bold-text text-center m-4">こんにちは、{{ user.username }}さん</h1>
+
 <div class="m-5">
     <div class="container-fluid">
         <div class="row">
@@ -26,6 +27,17 @@ Mypage
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                         aria-labelledby="v-pills-home-tab">
+                        <div class="row justify-content-between">
+                            <div class="col-4">
+                                <h4>要約一覧</h4>
+                            </div>
+                            <div class="col-4">
+                                <form method="get" role="search" class="d-flex">
+                                    <input class="form-control me-2" type="search" name="search_query" placeholder="検索">
+                                    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
