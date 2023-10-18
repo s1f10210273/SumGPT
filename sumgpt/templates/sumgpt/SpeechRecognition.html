@@ -37,6 +37,13 @@ index
         recognition.lang = 'ja-JP';
         recognition.interimResults = true;
         recognition.continuous = true;
+        const grammar =
+            '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 決定 | 判断 | 理由 | 案件 | 否決 | 再検討 | 再調整 | 保留 | 資料 | 補足資料 | 参考意見 | 社長一任 | アサイン ;'
+        const SpeechGrammarList = 
+            window.webkitSpeechGrammarList || window.SpeechGrammarList
+        const speechRecognitionList = new SpeechGrammarList()
+        speechRecognitionList.addFromString(grammar, 1)
+        recognition.grammars = speechRecognitionList
 
         //DOM要素の読み込み
         const startButton = document.getElementById('startButton');
