@@ -41,16 +41,6 @@ def login_view(request):
 
 @login_required
 def mypage(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # セッションの認証ハッシュを更新
-            messages.success(request, 'パスワードが変更されました。')
-            return redirect('login')
-    else:
-        form = PasswordChangeForm(request.user)
-
     search_query = request.GET.get('search_query', None)
 
     if search_query:
@@ -58,4 +48,18 @@ def mypage(request):
     else:
         user_sums = Sum.objects.filter(user=request.user)
 
-    return render(request, 'sumgpt/mypage.html', {'form': form, 'user_sums': user_sums})
+    return render(request, 'sumgpt/mypage.html', {'user_sums': user_sums})
+
+
+
+def passchange(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # セッションの認証ハッシュを更新
+            messages.success(request, 'パスワードが変更されました。')
+    else:
+        form = PasswordChangeForm(request.user)
+
+    return render(request, 'sumgpt/passchange.html', {'form': form})

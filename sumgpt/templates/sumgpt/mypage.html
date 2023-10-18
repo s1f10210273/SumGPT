@@ -110,42 +110,15 @@ Mypage
                     </div>
 
 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="exampleModalLabel">パスワード変更</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
-                                    {% if form.errors %}
-                                    <div class="alert alert-danger fade show" role="alert">
-                                        <strong>エラーが発生しました：</strong>
-                                        <ul>
-                                            {% for field, error_list in form.errors.items %}
-                                            {% for error in error_list %}
-                                            <li>{{ error }}</li>
-                                            {% endfor %}
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                    {% endif %}
-                                    <form method="post" action="{% url 'mypage' %}" class="form-group">
-                                        {% csrf_token %}
-                                        {% for item in form %}
-                                        <div class="form-group mb-3">
-                                            <label for="{{item.id_for_label}}">{{item.label}}</label>
-                                            <input type="{{item.field.widget.input_type}}" class="form-control"
-                                                {% if item.field.required %}required{% endif %} name="{{item.name}}"
-                                                id="{{item.id_for_label}}">
-                                        </div>
-                                        {% endfor %}
-                                        <div class="text-center">
-                                            <button type="submit" class="submit btn btn-secondary">変更</button>
-                                        </div>
-                                    </form>
+                                <div class="modal-body text-center" style="height: 350px;">
+                                    <iframe src="{% url 'passchange' %}"style="border: none; width: 100%; height: 100%;"></iframe>
                                 </div>
                             </div>
                         </div>

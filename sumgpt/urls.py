@@ -10,6 +10,7 @@ urlpatterns = [
     path("auth/signup", auth.signup, name="signup"),
     path("auth/login", auth.login_view, name="login"),
     path("auth/mypage", auth.mypage, name="mypage"),
+    path("passchange", auth.passchange, name="passchange"),
     path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
     path("speech", speech.index, name="speech"),
     path("SpeechRecognition", SpeechRecognition.index, name="SpeechRecognition"),
