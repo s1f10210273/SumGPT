@@ -135,3 +135,6 @@ import dotenv
 dotenv.load_dotenv()
 
 LOGIN_URL = 'auth/login'
+
+
+X_FRAME_OPTIONS = 'ALLOW'

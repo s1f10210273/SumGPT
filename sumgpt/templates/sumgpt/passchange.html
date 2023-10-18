@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% extends "sumgpt/base2.html" %}
+
+{% block title_block %}
+password change
+{% endblock %}
+
+{% block body_block %}
+
+{% if form.errors %}
+<div class="alert alert-danger fade show" role="alert">
+    <strong>エラーが発生しました：</strong>
+    <ul>
+        {% for field, error_list in form.errors.items %}
+        {% for error in error_list %}
+        <li>{{ error }}</li>
+        {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+<form method="post" action="{% url 'passchange' %}" class="form-group">
+    {% csrf_token %}
+    {% for item in form %}
+    <div class="form-group mb-3">
+        <label for="{{item.id_for_label}}">{{item.label}}</label>
+        <input type="{{item.field.widget.input_type}}" class="form-control"
+            {% if item.field.required %}required{% endif %} name="{{item.name}}" id="{{item.id_for_label}}">
+    </div>
+    {% endfor %}
+    <div class="text-center">
+        <button type="submit" class="submit btn btn-secondary">変更</button>
+    </div>
+</form>
+
+{% endblock %}

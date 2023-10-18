@@ -11,7 +11,7 @@ index
         <h1 class="display-4 bold-text">Welcome to SumGPT</h1>
         <div class="mt-4">
             {% if request.user.is_authenticated %}
-            <a href="{% url 'mypage' %}" class="btn btn-secondary" role="button">マイページ</a>
+            <a href="{% url 'SpeechRecognition' %}" class="btn btn-secondary" role="button">要約する</a>
             {% else %}
             <a href="{% url 'login' %}" class="btn btn-secondary" role="button">ログイン</a>
             {% endif %}
