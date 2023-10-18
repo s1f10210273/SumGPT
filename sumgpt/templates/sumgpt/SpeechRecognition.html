@@ -74,13 +74,13 @@ index
                     const selectElement = document.getElementById("inputState");
                     const selectedOption = selectElement.options[selectElement.selectedIndex].value;
                     if (selectedOption == 1) {
-                        const costomGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 決定 | 判断 | 理由 | 案件 | 否決 | 再検討 | 再調整 | 保留 | 資料 | 補足資料 | 参考意見 | 社長一任 | アサイン ;';
-                        speechRecognitionList.addFromString(costomGrammar, 1);
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 決定 | 判断 | 理由 | 案件 | 否決 | 再検討 | 再調整 | 保留 | 資料 | 補足資料 | 参考意見 | 社長一任 | アサイン ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
                         }
 
                     else if (selectedOption == 2) {
-                        const costomGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 決定 | 判断 | 理由 | 案件 | 否決 | 再検討 | 再調整 | 保留 | 資料 | 補足資料 | 参考意見 | 社長一任 | アサイン ;';
-                        speechRecognitionList.addFromString(costomGrammar, 1);
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 決定 | 判断 | 理由 | 案件 | 否決 | 再検討 | 再調整 | 保留 | 資料 | 補足資料 | 参考意見 | 社長一任 | アサイン ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
                         }
                     //選択業界を増やすときはこのしたに書いていくのがいいかも！！
                     //上のelse if文をコピペでいけます
