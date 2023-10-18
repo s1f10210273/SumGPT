@@ -5,8 +5,6 @@ import os
 from dotenv import load_dotenv
 from django.contrib.auth.decorators import login_required
 
-from .drive import save_docs
-
 # .envファイルを読み込む
 load_dotenv()
 
