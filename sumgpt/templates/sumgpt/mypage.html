@@ -51,7 +51,7 @@ Mypage
                                     <td class="text-truncate">
                                         {{ user_sum.sum|slice:":20" }}{% if user_sum.sum|length > 20 %}・・・{% endif %}
                                     </td>
-                                    <td><a href="{% url 'sum' user_sum.id %}" class="btn btn-secondary btn-sm">詳細を表示</a>
+                                    <td><a href="{% url 'sum' user_sum.id %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-card-text"></i></a>
                                     </td>
                                 </tr>
                                 {% empty %}
