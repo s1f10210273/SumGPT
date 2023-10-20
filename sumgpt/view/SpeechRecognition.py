@@ -8,8 +8,8 @@ from django.contrib.auth.decorators import login_required
 # .envファイルを読み込む
 load_dotenv()
 
+@login_required
 def index(request):
-
     return render(request, 'sumgpt/SpeechRecognition.html')
 
 @login_required
@@ -36,7 +36,7 @@ def sp(request):
 
         # dbに保存
         user = request.user
-        sum_instance = Sum.objects.create(user=user, sum=speech_result)
+        sum_instance = Sum.objects.create(user=user, sum=speech_result, detail=input_data)
 
         # 保存したインスタンスのIDを取得
         saved_id = sum_instance.id

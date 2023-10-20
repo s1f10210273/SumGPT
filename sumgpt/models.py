@@ -13,6 +13,7 @@ class Doc(models.Model):
 class Sum(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     sum = models.TextField()
+    detail = models.CharField(max_length=10000, default="データなし")
     timestamp = models.DateTimeField(auto_now_add=True)
 
 #文字起こし用のテーブル作成
