@@ -46,10 +46,16 @@
                             </thead>
                             <tbody>
                                 {% for user_sum in user_sums %}
-                                <tr>
-                                    <td>{{ user_sum.timestamp|date:"Y-m-d" }}</td>
+                                <tr class="column">
+                                    <td>{{ user_sum.timestamp|date:"Y-m-d" }}
+                                    </td>
                                     <td class="text-truncate">
+                                        <div class="additional-content2">
                                         {{ user_sum.sum|slice:":20" }}{% if user_sum.sum|length > 20 %}・・・{% endif %}
+                                    </div>
+                                        <div class="additional-content alert alert-secondary">
+                                                {{ user_sum.sum }}
+                                        </div>
                                     </td>
                                     <td><a href="{% url 'sum' user_sum.id %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-card-text"></i></a>
                                     </td>
