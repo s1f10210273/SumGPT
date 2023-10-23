@@ -5,6 +5,7 @@ from ..forms import UserForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from ..models import Sum
+from django.db.models import Q
 
 
 #サインアップ・ログイン機能
@@ -41,14 +42,17 @@ def login_view(request):
 
 @login_required
 def mypage(request):
-    search_query = request.GET.get('search_query', None)
+    search_query = request.GET.get('search_query', '')
 
-    if search_query:
-        user_sums = Sum.objects.filter(user=request.user, sum__icontains=search_query)
+    if request.user.is_authenticated:
+        user_sums = Sum.objects.filter(
+            Q(user=request.user),
+            Q(sum__icontains=search_query) | Q(detail__icontains=search_query)
+        )
     else:
-        user_sums = Sum.objects.filter(user=request.user)
+        user_sums = None
 
-    return render(request, 'sumgpt/mypage.html', {'user_sums': user_sums})
+    return render(request, 'sumgpt/mypage.html', {'user_sums': user_sums, 'search_query': search_query})
 
 
 

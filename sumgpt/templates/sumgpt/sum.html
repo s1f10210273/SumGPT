@@ -11,12 +11,16 @@
     <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.sum }}</textarea>
     <span class="badge rounded-pill text-bg-dark float-end">{{ sum_data.timestamp }}</span>
     <button class="btn btn-danger" id="deleteButton">削除</button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        文字起こしの確認
+    </button>
     <!-- googledocsに要約を保存-->
     <a href="{% url 'savedocs' sum_data.id %}" class="btn btn-danger">Docs保存</a>
 </div>
 
 <!-- 確認ダイアログ用モーダル -->
-<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -29,6 +33,21 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
                 <a href="{% url 'sumdel' sum_data.id %}" class="btn btn-danger">削除</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">文字起こしの確認</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.detail }}</textarea>
             </div>
         </div>
     </div>
