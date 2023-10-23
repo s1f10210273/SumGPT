@@ -17,7 +17,7 @@ urlpatterns = [
     path("sp", SpeechRecognition.sp, name="sp"),
     path('sum/<int:pk>/', SpeechRecognition.sum, name='sum'),
     path('sum_del/<int:pk>/', SpeechRecognition.sum_del, name='sumdel'),
-    path('save_docs/<int:pk>/', drive.save_docs, name='savedocs'),
+    path('save_sum_to_docs/<int:pk>/', drive.save_sum_to_docs, name='savesumtodocs'),
 ]
 
 #文字起こし機能のファイル削除用
