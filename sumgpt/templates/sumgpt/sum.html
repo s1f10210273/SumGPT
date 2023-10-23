@@ -15,7 +15,9 @@
         文字起こしの確認
     </button>
     <!-- googledocsに要約を保存-->
-    <a href="{% url 'savesumtodocs' sum_data.id %}" class="btn btn-danger">Docs保存</a>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#saveDocsModal">
+        Driveに保存
+    </button>
 </div>
 
 <!-- 確認ダイアログ用モーダル -->
@@ -48,6 +50,29 @@
             </div>
             <div class="modal-body">
                 <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.detail }}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="saveDocsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="saveDocsModalLabel">GoogleDriveに要約を保存</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ファイル名を入力してください。
+                <form action="/save_sum_to_docs" method="post" class="form-control">
+                    {% csrf_token %}
+                    <br>
+                    <p>ファイル名: <input type="text" name="filename" required="required"></p>
+                    <!--↓表示されない要素 sum_data.idを格納-->
+                    <input type="hidden" name="pk" value="{{sum_data.id}}">
+                    <button type="submit" class="btn btn-secondary">保存</button>
+                </form>
             </div>
         </div>
     </div>

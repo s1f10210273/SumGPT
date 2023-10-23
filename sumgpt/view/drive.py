@@ -15,9 +15,9 @@ def access_drive():
     return GoogleDrive(gauth)
 
 #Docsの新規作成保存
-def create_docs(title, content):
+def create_docs(filename, content):
     drive = access_drive()
-    docs = drive.CreateFile({'title': title})
+    docs = drive.CreateFile({'title': filename})
     docs.SetContentString(content)
     #作成したファイルの情報を表示
     print(docs)
@@ -26,9 +26,14 @@ def create_docs(title, content):
 
 #sumをDocsに保存する
 @login_required
-def save_sum_to_docs(request, pk, title = "sumGPT"):
-    sum_data = get_object_or_404(Sum, pk=pk)
-    content = "ユーザー名:{}\n要約文:\n{}本文:\n{}\nタイムスタンプ\n{}".format(sum_data.user, sum_data.sum, sum_data.detail, sum_data.timestamp)
-    create_docs(title, content)
-    return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
+def save_sum_to_docs(request):
+    if request.method == 'POST':
+        filename = request.POST.get("filename", None)        
+        pk = request.POST.get("pk", None)
+        sum_data = get_object_or_404(Sum, pk=pk)
+        content = "ユーザー名:{}\n要約文:\n{}\n本文:\n{}\nタイムスタンプ\n{}".format(sum_data.user, sum_data.sum, sum_data.detail, sum_data.timestamp)
+        create_docs(filename, content)
+        return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
+    else:
+        return redirect('mypage')
 
