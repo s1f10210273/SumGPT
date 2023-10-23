@@ -68,7 +68,7 @@
                 <form action="/save_sum_to_docs" method="post" class="form-control">
                     {% csrf_token %}
                     <br>
-                    <p>ファイル名: <input type="text" name="filename" required="required">.docs</p>
+                    <p>ファイル名: <input type="text" name="filename" required="required"></p>
                     <!--↓表示されない要素 sum_data.idを格納-->
                     <input type="hidden" name="pk" value="{{sum_data.id}}">
                     <button type="submit" class="btn btn-secondary">保存</button>

@@ -17,10 +17,10 @@ def access_drive():
 #Docsの新規作成保存
 def create_docs(filename, content):
     drive = access_drive()
-    docs = drive.CreateFile({'title': filename, 'mimeType':	"application/vnd.openxmlformats-officedocument.wordprocessingml.document"})
+    docs = drive.CreateFile({'title': filename, 'mimeType':	"text/plain"})
     docs.SetContentString(content)
     #ファイルのアップロード(google driveの最上位のディレクトリに置かれます。)
-    docs.Upload()
+    docs.Upload(param={'convert': True})
     #作成したファイルの情報を表示
     #print(docs)
 
