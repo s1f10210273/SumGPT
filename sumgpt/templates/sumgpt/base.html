@@ -58,6 +58,33 @@
             z-index: 1000;
             /* 他の要素より前面に表示 */
         }
+
+        .additional-content {
+            display: block;
+            position: fixed;
+            white-space: normal;
+            top: 1%;
+            left: 5%;
+            width: 90%;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .column:hover .additional-content {
+            display: block;
+            position: fixed;
+            white-space: normal;
+            top: 1%;
+            left: 5%;
+            width: 90%;
+            z-index: 9999;
+            opacity: 0.9; /* 要素を不透明にする */
+        }
+        
+        
+        
+        
     </style>
 </head>
 
