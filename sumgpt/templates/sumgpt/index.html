@@ -6,6 +6,10 @@ index
 {% endblock %}
 
 {% block body_block %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'sumgpt/style.css' %}">
+
 <div class="container mt-5 d-flex justify-content-center align-items-center vh-100">
     <div class="text-center">
         <h1 class="display-4 bold-text">Welcome to SumGPT</h1>
