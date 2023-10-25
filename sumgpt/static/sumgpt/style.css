@@ -10,7 +10,7 @@ h1:before, h1:after {
     top: 50%;
     display: inline-block;
     width: 45px;
-    height: 2px;
+    height: 4px;
     border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
