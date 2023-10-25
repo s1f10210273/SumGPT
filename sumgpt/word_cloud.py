@@ -30,3 +30,5 @@ def WC(filename, export, exclusion = []):# 入力ファイル、出力ファイ�
     w.generate(words)
     w.to_file(export)
     print("img")
+    
+    
