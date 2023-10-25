@@ -26,9 +26,7 @@ def WC(filename, export, exclusion = []):# 入力ファイル、出力ファイ�
     words = ' ' . join(word)#引数のリストを' 'でつないで文字列にする。
     print("text")
 
-    w = WordCloud(font_path='sumgpt/static/fonts/Kaisotai-Next-UP-B.eot', width=800, height=600, background_color='white', min_font_size = 15)
+    w = WordCloud(font_path='.\\static\\fonts\\NotoSerifJP-Regular.otf', width=800, height=600, background_color='white', min_font_size = 15)#fontファイル
     w.generate(words)
     w.to_file(export)
     print("img")
-    
-    
