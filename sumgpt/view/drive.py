@@ -1,10 +1,9 @@
 #google drive api関連の処理
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from ..models import Sum
 import os
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
-from django.contrib.auth.decorators import login_required
 
 def access_drive():
     #Google認証
@@ -16,24 +15,28 @@ def access_drive():
 
 #Docsの新規作成保存
 def create_docs(filename, content):
-    drive = access_drive()
-    docs = drive.CreateFile({'title': filename, 'mimeType':	"text/plain"})
-    docs.SetContentString(content)
-    #ファイルのアップロード(google driveの最上位のディレクトリに置かれます。)
-    docs.Upload(param={'convert': True})
-    #作成したファイルの情報を表示
-    #print(docs)
+    try:
+        drive = access_drive()
+        docs = drive.CreateFile({'title': filename, 'mimeType':	"text/plain"})
+        docs.SetContentString(content)
+        #ファイルのアップロード(google driveの最上位のディレクトリに置かれます。)
+        print("_")
+        docs.Upload(param={'convert': True})
+        print("4")
+        #作成したファイルのURLを返す
+        return 'https://docs.google.com/document/d/' + str(docs['id'])
+    except:
+        return "ERROR"
 
 #sumをDocsに保存する
-@login_required
-def save_sum_to_docs(request):
-    if request.method == 'POST':
-        filename = request.POST.get("filename", None)        
-        pk = request.POST.get("pk", None)
-        sum_data = get_object_or_404(Sum, pk=pk)
-        content = "ユーザー名： {}\n要約文：\n{}\n本文：\n{}\nタイムスタンプ：\n{}".format(sum_data.user, sum_data.sum, sum_data.detail, sum_data.timestamp)
-        create_docs(filename, content)
-        return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
+def save_sum_to_docs(filename, pk):
+    sum_data = get_object_or_404(Sum, pk=pk)
+    content = "ユーザー名： {}\n要約文：\n{}\n本文：\n{}\nタイムスタンプ：\n{}".format(sum_data.user, sum_data.sum, sum_data.detail, sum_data.timestamp)
+    docs_url = create_docs(filename, content)
+    drive_msg = {"msg":"", "url": ""}
+    if (docs_url == "ERROR"):
+        drive_msg["msg"] = "GoogleDriveへの保存に失敗しました。"
     else:
-        return redirect('mypage')
+        drive_msg["msg"] = "GoogleDriveへの保存に成功しました。"
+    return drive_msg
 

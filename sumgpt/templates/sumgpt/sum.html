@@ -14,10 +14,12 @@
     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         文字起こしの確認
     </button>
-    <!-- googledocsに要約を保存-->
     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#saveDocsModal">
         Driveに保存
     </button>
+    <!--GoogleDriveへのファイル保存の結果を格納-->
+    <p>{{drive_msg.msg}}</p>
+    <a href="{{drive_msg.url}}">{{drive_msg.url}}</a>
 </div>
 
 <!-- 確認ダイアログ用モーダル -->
@@ -65,7 +67,7 @@
             </div>
             <div class="modal-body">
                 ファイル名を入力してください。
-                <form action="/save_sum_to_docs" method="post" class="form-control">
+                <form action="" method="post" class="form-control">
                     {% csrf_token %}
                     <br>
                     <p>ファイル名: <input type="text" name="filename" required="required"></p>
@@ -83,6 +85,7 @@
     document.getElementById('deleteButton').addEventListener('click', function () {
         $('#deleteConfirmationModal').modal('show');
     });
+
 </script>
 
 {% endblock %}
