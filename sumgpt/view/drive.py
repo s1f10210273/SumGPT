@@ -20,9 +20,7 @@ def create_docs(filename, content):
         docs = drive.CreateFile({'title': filename, 'mimeType':	"text/plain"})
         docs.SetContentString(content)
         #ファイルのアップロード(google driveの最上位のディレクトリに置かれます。)
-        print("_")
         docs.Upload(param={'convert': True})
-        print("4")
         #作成したファイルのURLを返す
         return 'https://docs.google.com/document/d/' + str(docs['id'])
     except:
@@ -38,5 +36,6 @@ def save_sum_to_docs(filename, pk):
         drive_msg["msg"] = "GoogleDriveへの保存に失敗しました。"
     else:
         drive_msg["msg"] = "GoogleDriveへの保存に成功しました。"
+        drive_msg["url"] = docs_url
     return drive_msg
 

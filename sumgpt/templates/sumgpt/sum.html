@@ -18,8 +18,8 @@
         Driveに保存
     </button>
     <!--GoogleDriveへのファイル保存の結果を格納-->
-    <p>{{drive_msg.msg}}</p>
-    <a href="{{drive_msg.url}}">{{drive_msg.url}}</a>
+    
+    <a id="urlview" class="alert alert-light mt-3" style="display:none;" href="" target="_blank">{{drive_msg.url}}</a>
 </div>
 
 <!-- 確認ダイアログ用モーダル -->
@@ -66,14 +66,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ファイル名を入力してください。
-                <form action="" method="post" class="form-control">
+                <p id="process">ファイル名を入力してください。</p>
+                <form action="" method="post" class="form-control" id="form">
                     {% csrf_token %}
                     <br>
                     <p>ファイル名: <input type="text" name="filename" required="required"></p>
                     <!--↓表示されない要素 sum_data.idを格納-->
                     <input type="hidden" name="pk" value="{{sum_data.id}}">
-                    <button type="submit" class="btn btn-secondary">保存</button>
+                    <button type="button" id="submit-button" class="btn btn-secondary">保存</button>
                 </form>
             </div>
         </div>
@@ -86,6 +86,31 @@
         $('#deleteConfirmationModal').modal('show');
     });
 
+    //GoogleDriveに文書を保存するPOST
+    const form = document.getElementById("form")
+    const submitButton = document.getElementById("submit-button")
+    const urlview = document.getElementById("urlview")
+    const process_msg = document.getElementById("process")
+    submitButton.onclick = () => {
+        const formData = new FormData(form)
+        const action = form.getAttribute("action")
+        submitButton.disable = false;
+        process_msg.textContent = "保存中です。"
+        const options = {
+            method: 'POST',
+            body: formData,
+        }
+        fetch(action, options).then((response) => {
+            return response.json();
+        }).then((data) => {
+            alert(data.msg, data.url);
+            urlview.textContent = data.url;
+            urlview.setAttribute('href', data.url);
+            submitButton.disable = true;
+            urlview.style.display='flex'
+            process_msg.textContent = "ファイル名を入力してください。"
+        });
+    }
 </script>
 
 {% endblock %}
