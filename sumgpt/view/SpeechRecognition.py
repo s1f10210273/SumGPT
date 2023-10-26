@@ -56,6 +56,7 @@ def sum(request, pk):
         pk = request.POST.get("pk", None)
         drive_msg = save_sum_to_docs(filename=filename, pk=pk)
         return JsonResponse(drive_msg)
+    
     sum_data = get_object_or_404(Sum, pk=pk)  # SumモデルとデータのIDを指定
     return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
 

@@ -28,7 +28,7 @@ pip install openai
 ```
 pip install python-dotenv
 ```
-driveとの連携の読み込み
+driveと連携用 読み込み
 ```
 pip install pydrive2
 ```
@@ -38,6 +38,9 @@ pip install pydrive2
 ```
 OPENAI_API_KEY=<自分のAPIkey>
 ```
+
+sumgpt/pydriveフォルダを作成し`settings.yaml`ファイルを直下に配置
+
 ### 5. マイグレーション
 ```
 python manage.py makemigrations

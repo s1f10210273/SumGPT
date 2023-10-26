@@ -19,7 +19,7 @@
     </button>
     <!--GoogleDriveへのファイル保存の結果を格納-->
     
-    <a id="urlview" class="alert alert-light mt-3" style="display:none;" href="" target="_blank">{{drive_msg.url}}</a>
+    <a id="urlview" class="alert alert-light mt-3" style="display:none;" href="" target="_blank">{{sum_data.doc}}</a>
 </div>
 
 <!-- 確認ダイアログ用モーダル -->
@@ -86,10 +86,16 @@
         $('#deleteConfirmationModal').modal('show');
     });
 
+    //docsの保存urlがあれば表示する
+    const urlview = document.getElementById("urlview")
+    if (urlview.textContent != ""){
+        urlview.setAttribute('href', urlview.textContent);
+        urlview.style.display='flex';
+    } 
+
     //GoogleDriveに文書を保存するPOST
     const form = document.getElementById("form")
     const submitButton = document.getElementById("submit-button")
-    const urlview = document.getElementById("urlview")
     const process_msg = document.getElementById("process")
     submitButton.onclick = () => {
         const formData = new FormData(form)
@@ -107,7 +113,7 @@
             urlview.textContent = data.url;
             urlview.setAttribute('href', data.url);
             submitButton.disable = true;
-            urlview.style.display='flex'
+            urlview.style.display = data.url == "" && urlview.textContent == ""?'none':'flex'
             process_msg.textContent = "ファイル名を入力してください。"
         });
     }
