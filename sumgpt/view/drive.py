@@ -17,11 +17,9 @@ def access_drive():
 def create_docs(filename, content):
     try:
         drive = access_drive()
-        print("アカウント認証完了")
         docs = drive.CreateFile({'title': filename, 'mimeType':	"text/plain"})
         docs.SetContentString(content)
         #ファイルのアップロード(google driveの最上位のディレクトリに置かれます。)
-        print("ファイルアップロード中")
         docs.Upload(param={'convert': True})
         #作成したファイルのURLを返す
         return 'https://docs.google.com/document/d/' + str(docs['id'])
