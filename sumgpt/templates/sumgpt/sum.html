@@ -100,7 +100,9 @@
     submitButton.onclick = () => {
         const formData = new FormData(form)
         const action = form.getAttribute("action")
+        // 保存ボタンの無効化
         submitButton.disable = false;
+        // 保存モーダルのテキストの書き換え
         process_msg.textContent = "保存中です。"
         const options = {
             method: 'POST',
@@ -109,10 +111,14 @@
         fetch(action, options).then((response) => {
             return response.json();
         }).then((data) => {
+            // 保存の可不可を表示
             alert(data.msg, data.url);
+            //DocsのURLとリンクの更新
             urlview.textContent = data.url;
             urlview.setAttribute('href', data.url);
+            //保存ボタンの有効化
             submitButton.disable = true;
+            //保存に失敗 かつ DBにURLがない場合非表示、違う場合は表示
             urlview.style.display = data.url == "" && urlview.textContent == ""?'none':'flex'
             process_msg.textContent = "ファイル名を入力してください。"
         });
