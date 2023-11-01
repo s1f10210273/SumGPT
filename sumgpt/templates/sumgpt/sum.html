@@ -14,6 +14,12 @@
     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         文字起こしの確認
     </button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#saveDocsModal">
+        Driveに保存
+    </button>
+    <!--GoogleDriveへのファイル保存の結果を格納-->
+    
+    <a id="urlview" class="alert alert-light mt-3" style="display:none;" href="" target="_blank">{{sum_data.doc}}</a>
 </div>
 
 <!-- 確認ダイアログ用モーダル -->
@@ -51,11 +57,72 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="saveDocsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="saveDocsModalLabel">GoogleDriveに要約を保存</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="process">ファイル名を入力してください。</p>
+                <form action="" method="post" class="form-control" id="form">
+                    {% csrf_token %}
+                    <br>
+                    <p>ファイル名: <input type="text" name="filename" required="required"></p>
+                    <!--↓表示されない要素 sum_data.idを格納-->
+                    <input type="hidden" name="pk" value="{{sum_data.id}}">
+                    <button type="button" id="submit-button" class="btn btn-secondary">保存</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     // 削除ボタンをクリックしたときに確認ダイアログを表示
     document.getElementById('deleteButton').addEventListener('click', function () {
         $('#deleteConfirmationModal').modal('show');
     });
+
+    //docsの保存urlがあれば表示する
+    const urlview = document.getElementById("urlview")
+    if (urlview.textContent != ""){
+        urlview.setAttribute('href', urlview.textContent);
+        urlview.style.display='flex';
+    } 
+
+    //GoogleDriveに文書を保存するPOST
+    const form = document.getElementById("form")
+    const submitButton = document.getElementById("submit-button")
+    const process_msg = document.getElementById("process")
+    submitButton.onclick = () => {
+        const formData = new FormData(form)
+        const action = form.getAttribute("action")
+        // 保存ボタンの無効化
+        submitButton.disable = false;
+        // 保存モーダルのテキストの書き換え
+        process_msg.textContent = "保存中です。"
+        const options = {
+            method: 'POST',
+            body: formData,
+        }
+        fetch(action, options).then((response) => {
+            return response.json();
+        }).then((data) => {
+            // 保存の可不可を表示
+            alert(data.msg, data.url);
+            //DocsのURLとリンクの更新
+            urlview.textContent = data.url;
+            urlview.setAttribute('href', data.url);
+            //保存ボタンの有効化
+            submitButton.disable = true;
+            //保存に失敗 かつ DBにURLがない場合非表示、違う場合は表示
+            urlview.style.display = data.url == "" && urlview.textContent == ""?'none':'flex'
+            process_msg.textContent = "ファイル名を入力してください。"
+        });
+    }
 </script>
 
 {% endblock %}

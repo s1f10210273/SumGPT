@@ -28,11 +28,19 @@ pip install openai
 ```
 pip install python-dotenv
 ```
+driveと連携用 読み込み
+```
+pip install pydrive2
+```
+
 ### 4. 環境変数の設定
 ルートディレクトリ直下に`.env`ファイルを作成し、以下の内容を記述
 ```
 OPENAI_API_KEY=<自分のAPIkey>
 ```
+
+sumgpt/pydriveフォルダを作成し`settings.yaml`ファイルを直下に配置
+
 ### 5. マイグレーション
 ```
 python manage.py makemigrations

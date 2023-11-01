@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .view import auth, speech, SpeechRecognition
+from .view import auth, speech, SpeechRecognition, drive
 from . import views
 
 urlpatterns = [
