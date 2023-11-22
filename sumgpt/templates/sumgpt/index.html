@@ -10,7 +10,7 @@ index
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-<div class="colorchangeanime2_bg"></div>
+<div class="colorchangeanime2_bg">
 <div class="container mt-5 d-flex justify-content-center align-items-center vh-100">
     <div class="text-center">
         <h1 class="display-4 bold-text">Welcome to SumGPT</h1>
@@ -23,6 +23,8 @@ index
         </div>
     </div>
 </div>
+</div>
+
 <script>
     // ページが読み込まれたときにダークモードの状態を取得
     var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
