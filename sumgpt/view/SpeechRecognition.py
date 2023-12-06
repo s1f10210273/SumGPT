@@ -14,7 +14,6 @@ load_dotenv()
 def index(request):
     return render(request, 'sumgpt/SpeechRecognition.html')
 
-@login_required
 def sp(request):
     if request.method == 'POST':
         input_data = request.POST.get('data', '')
@@ -48,7 +47,6 @@ def sp(request):
     else:
         return render(request, 'sumgpt/sp.html')
 
-@login_required
 def sum(request, pk):
     # GoogleDriveに要約文を保存する処理
     if request.method == 'POST':
