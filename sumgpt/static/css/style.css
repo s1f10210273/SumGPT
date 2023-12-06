@@ -28,7 +28,7 @@ h1:after {
     height: 230px;
     margin: 30px 0;
     background: rgb(255, 255, 255);
-    background: radial-gradient(circle, rgb(255, 255, 255) 0%, rgb(173, 173, 173) 100%) 0 0 / 200% 100% repeat;
+    background: radial-gradient(circle, rgb(137, 221, 234) 0%, rgb(212, 60, 90) 100%) 0 0 / 200% 100% repeat;
     animation: colorchangeanimation-bg2 5s infinite alternate;
 }
   
