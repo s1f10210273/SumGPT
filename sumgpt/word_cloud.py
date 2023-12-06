@@ -1,4 +1,7 @@
-#wordcloud用pythonファイル
+#wordcloud用pythonファイル(指定したfileから画像を指定したfileへ生成。)
+
+import os 
+from django.conf import settings
 
 import codecs #ファイルを開く
 from janome.tokenizer import Tokenizer #文字の分解（品詞）
@@ -11,7 +14,6 @@ filename = ()
 def WC(filename, export, exclusion = []):# 入力ファイル、出力ファイル、除外ワードを指定してWordCloudを作成する関数
     with codecs.open(filename,'r','utf-8','ignore') as f:
         text = f.read()
-    print("file readed")
 
     #exclusion で除外ワードを作成し、品詞分解
     token = Tokenizer().tokenize(text)
@@ -24,9 +26,9 @@ def WC(filename, export, exclusion = []):# 入力ファイル、出力ファイ�
             word.append(tkn[0])
     
     words = ' ' . join(word)#引数のリストを' 'でつないで文字列にする。
-    print("text")
 
-    w = WordCloud(font_path='.\\static\\fonts\\NotoSerifJP-Regular.otf', width=800, height=600, background_color='white', min_font_size = 15)#fontファイル
+    w = WordCloud(font_path='./static/fonts/NotoSerifJP-Regular.otf', width=800, height=600, background_color='white', min_font_size = 15)#fontファイル
     w.generate(words)
-    w.to_file(export)
-    print("img")
+    
+    path = os.path.join(settings.MEDIA_ROOT, "WordClouds", export, ".png")
+    w.to_file(path)

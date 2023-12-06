@@ -17,6 +17,8 @@ urlpatterns = [
     path("sp", SpeechRecognition.sp, name="sp"),
     path('sum/<int:pk>/', SpeechRecognition.sum, name='sum'),
     path('sum_del/<int:pk>/', SpeechRecognition.sum_del, name='sumdel'),
+    path('generate_wordcloud', views.generate_wordcloud, name="generate_wordcloud"),
+    path('test_wordcloud/<int:id>/', views.show_wordcloud, name="show_wordcloud"), #wordcloud用モデルのid。指定されたidの画像を表示する。
 ]
 
 #文字起こし機能のファイル削除用
