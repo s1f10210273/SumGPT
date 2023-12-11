@@ -15,7 +15,7 @@
         文字起こしの確認
     </button>
     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#saveDocsModal">
-        Driveに保存
+        保存
     </button>
     <!--GoogleDriveへのファイル保存の結果を格納-->
     
@@ -62,18 +62,19 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="saveDocsModalLabel">GoogleDriveに要約を保存</h1>
+                <h1 class="modal-title fs-5" id="saveDocsModalLabel">保存</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p id="process">ファイル名を入力してください。</p>
+                <p id="process">ファイル名を入力してください。(拡張子は不要です)</p>
                 <form action="" method="post" class="form-control" id="form">
                     {% csrf_token %}
                     <br>
-                    <p>ファイル名: <input type="text" name="filename" required="required"></p>
+                    <p>ファイル名: <input type="text" name="filename" required="required" id="filename"></p>
                     <!--↓表示されない要素 sum_data.idを格納-->
                     <input type="hidden" name="pk" value="{{sum_data.id}}">
-                    <button type="button" id="submit-button" class="btn btn-secondary">保存</button>
+                    <button type="button" id="submit-button" class="btn btn-secondary">GoogleDriveに保存</button>
+                    <a href="../../docx_responce/{{sum_data.id}}/output" class="btn btn-secondary" id="docsDownload" target="_blank">ダウンロード</a>
                 </form>
             </div>
         </div>
@@ -122,7 +123,20 @@
             urlview.style.display = data.url == "" && urlview.textContent == ""?'none':'flex'
             process_msg.textContent = "ファイル名を入力してください。"
         });
+
     }
+    //ファイルダウンロード関係
+    const element = document.querySelector('#filename')
+    element.addEventListener('input', handleChange);
+
+    function handleChange(event){
+        const encodeFilename = event.target.value? encodeURIComponent(event.target.value) : "output";
+        const href = `../../docx_responce/{{sum_data.id}}/${encodeFilename}`
+        document.querySelector('#docsDownload').setAttribute('href', href)
+  //ファイルダウンロード関係 ここまで
+}
+
+
 </script>
 
 {% endblock %}
