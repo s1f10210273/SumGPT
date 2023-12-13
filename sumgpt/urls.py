@@ -17,7 +17,8 @@ urlpatterns = [
     path("sp", SpeechRecognition.sp, name="sp"),
     path('sum/<int:pk>/', SpeechRecognition.sum, name='sum'),
     path('sum_del/<int:pk>/', SpeechRecognition.sum_del, name='sumdel'),
-    path('docx_responce/<int:pk>/<str:filename>/', drive.docx_responce, name='docxResponce'),
+    path('api/docx_download/', drive.docx_download, name='docxDownload'),
+    path('api/docx_to_drive', drive.docx_to_drive, name='docxToDrive'),
 ]
 
 #文字起こし機能のファイル削除用
