@@ -16,10 +16,7 @@ from wordcloud import WordCloud #wordcloud
 #静的ファイルをviewsで直接指定する場合にのみ必要
 from django.contrib.staticfiles import finders
 
-exclude = [] #変更箇所。除くワード
-filename = ()
-
-def WC(filename, exclusion = []):# 入力ファイル、出力ファイル、除外ワードを指定してWordCloudを作成する関数
+def WC(filename, exclusion = []):# 入力ファイル、除外ワードを指定してWordCloudを作成する関数
     with codecs.open(filename,'r','utf-8','ignore') as f:
         text = f.read()
 
@@ -54,11 +51,6 @@ def WC(filename, exclusion = []):# 入力ファイル、出力ファイル、除
     with open(path, 'rb') as file:
         model_instance.image.save(f'no_{id}.png', File(file), save=True)
         
-        # モデルの image フィールドを更新(画像が開けなくなった。)
-        #model_instance.image.save(f'no_{id}.png', ContentFile(file.read()), save=True)
-
-
-    model_instance.image.name = path
+    os.remove(path)
         
     return id
-    #return model_instanceの方が良い？

@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from ..models import Sum
+from ..word_cloud import WC #wordcloud用関数
 import openai
 import os
 from dotenv import load_dotenv
@@ -41,6 +42,9 @@ def sp(request):
         # 保存したインスタンスのIDを取得
         saved_id = sum_instance.id
         sum_data = get_object_or_404(Sum, pk=saved_id)
+
+        #wordcloud用の処理
+        WC(user, input_data, saved_id)
 
         return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
     else:

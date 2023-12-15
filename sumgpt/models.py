@@ -21,12 +21,14 @@ class Upload(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
 #wordcloud用テーブル(文字起こしデータ、要約データから参照されるべき。どちらも元が消えると消える。)
-""""
-class WordCloud(models.Model):
-    origin = models.ForeignKey(Upload, on_delete=models.CASCADE, related_name='origin')#オリジナルの音声データ格納モデルだと思われる。できれば原文をテキストで欲しい。
-    sum = models.ForeignKey(Sum, on_delete=models.CASCADE, related_name='sum')
+
+class WordCloud_m(models.Model):
+    #Userと紐づければ画像一覧でも表示できそう。そうでなくても、ユーザーが消えたら消すべきだから、入れる必要あり。
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
+    origin = models.TextField()#SpeechRecognition.pyのinput_dataを登録する。
+    sum = models.ForeignKey(Sum, on_delete=models.CASCADE, related_name='word_cloud')#紐づけ用(Sum_instance.word_cloud.all() のように使用。)
     image = models.ImageField(upload_to='word_cloud')
-"""
+
     
 #wordcloud用テーブル(画像とidのみ）後で消す。
 class WordCloud_test(models.Model):
