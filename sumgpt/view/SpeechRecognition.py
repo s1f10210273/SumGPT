@@ -4,8 +4,6 @@ import openai
 import os
 from dotenv import load_dotenv
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from .drive import save_sum_to_docs
 
 # .envファイルを読み込む
 load_dotenv()
@@ -48,13 +46,6 @@ def sp(request):
         return render(request, 'sumgpt/sp.html')
 
 def sum(request, pk):
-    # GoogleDriveに要約文を保存する処理
-    if request.method == 'POST':
-        filename = request.POST.get("filename", None)
-        pk = request.POST.get("pk", None)
-        drive_msg = save_sum_to_docs(filename=filename, pk=pk)
-        return JsonResponse(drive_msg)
-    
     sum_data = get_object_or_404(Sum, pk=pk)  # SumモデルとデータのIDを指定
     return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
 

@@ -28,11 +28,14 @@ pip install openai
 ```
 pip install python-dotenv
 ```
-driveと連携用 読み込み
+GoogleDriveと連携ライブラリ
 ```
 pip install pydrive2
 ```
-
+pythonでwordファイルを操作するライブラリ
+```
+pip install python-docx
+```
 ### 4. 環境変数の設定
 ルートディレクトリ直下に`.env`ファイルを作成し、以下の内容を記述
 ```
