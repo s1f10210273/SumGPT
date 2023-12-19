@@ -23,13 +23,16 @@ index
                 <select id="inputState" class="form-select">
                     <option selected>業界を指定</option>
                     {% comment %} 下の[selectedOption]には、このvalueの値が入る {% endcomment %}
-                    <option value="1">メーカー</option>
-                    <option value="2">商社</option>
-                    <option value="3">ソフトウェア</option>
-                    <option value="4">小売</option>
-                    <option value="5">広告・出版・マスコミ</option>
-                    <option value="6">金融</option>
-                    <option value="7">官公庁・公社・団体</option>
+                    <option value="1">農業・林業・漁業</option>
+                    <option value="2">建設業</option>
+                    <option value="3">電気・ガス・熱供給・水道業</option>
+                    <option value="4">製造号</option>
+                    <option value="5">運輸業</option>
+                    <option value="6">情報通信業</option>
+                    <option value="7">卸売・小売業</option>
+                    <option value="8">金融・保険業</option>
+                    <option value="9">飲食・宿泊業</option>
+                    <option value="10">不動産業</option>
                     {% comment %} 業界を増やしていきたいですね😀 {% endcomment %}
                 </select>
 
@@ -79,14 +82,55 @@ index
                     const selectElement = document.getElementById("inputState");
                     const selectedOption = selectElement.options[selectElement.selectedIndex].value;
                     if (selectedOption == 1) {
-                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 決定 | 判断 | 理由 | 案件 | 否決 | 再検討 | 再調整 | 保留 | 資料 | 補足資料 | 参考意見 | 社長一任 | アサイン ;';
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 価格均一化 | 希少性 | 安定供給 | ブランド | リサイクル | 再生材料・リサイクル材料 | 企業ネットワーク | 手作り生産 | 独自技術 | 有機栽培 | 受託生産 | 特許保有 | 販売店販売 | チェーン展開 | タイアップ販売 | サンプル販売 | 保証期間延長 | トレーサビリティ ;';
                         speechRecognitionList.addFromString(customGrammar, 1);
                         }
 
                     else if (selectedOption == 2) {
-                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 決定 | 判断 | 理由 | 案件 | 否決 | 再検討 | 再調整 | 保留 | 資料 | 補足資料 | 参考意見 | 社長一任 | アサイン ;';
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 価格均一化 | 独自技術 | 希少性 | 信頼性 | 高技能人材 | 再生材料・リサイクル材料 | 直接仕入れ | プレ加工生産 | 現場加工 | 独自技術 | 受託生産 | 一括請負 | 事業連携 | 中間検査 | 特許保有 | 独自営業力 | 提案販売 | 販売店販売 | チェーン展開 | タイアップ販売 | 保証期間延長 | 会員制 | 定期メンテナンス ;';
                         speechRecognitionList.addFromString(customGrammar, 1);
                         }
+                    
+                    else if (selectedOption == 3) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> =  |  |  |  |  |  |  |  |  |  |  |  |  ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 4) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> =  |  |  |  |  |  |  |  |  |  |  |  |  ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 5) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> =  |  |  |  |  |  |  |  |  |  |  |  |  ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 6) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> =  |  |  |  |  |  |  |  |  |  |  |  |  ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 7) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> =  |  |  |  |  |  |  |  |  |  |  |  |  ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+
+                    else if (selectedOption == 8) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> =  |  |  |  |  |  |  |  |  |  |  |  |  ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 9) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> =  |  |  |  |  |  |  |  |  |  |  |  |  ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+
+                    else if (selectedOption == 10) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> =  |  |  |  |  |  |  |  |  |  |  |  |  ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                
                     //選択業界を増やすときはこのしたに書いていくのがいいかも！！
                     //上のelse if文をコピペでいけます
                     recognition.grammars = speechRecognitionList;
