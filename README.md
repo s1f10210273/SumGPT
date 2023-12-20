@@ -43,7 +43,8 @@ OPENAI_API_KEY=<自分のAPIkey>
 ```
 
 sumgpt/pydriveフォルダを作成し`settings.yaml`ファイルを直下に配置
-Google認証を行うと、sumgpt/pydrive/credentials.jsonファイルが生成されます。
+
+Google認証を行うと、`sumgpt/pydrive/credentials.json`ファイルが生成されます。
 このファイルを消すと認証情報が消えます。
 
 ### 5. マイグレーション
