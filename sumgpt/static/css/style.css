@@ -1,42 +1,111 @@
-h1 {
-    position: relative;
-    display: inline-block;
-    padding: 0 55px;
+/*========= ローディング画面のためのCSS ===============*/
+
+#splash {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 9999999;
+    text-align:center;
+    color:#333;
 }
 
-h1:before, h1:after {
-    content: '';
+#splash-logo {
+    background: #5DA7D2;
+    font-size: 50px;
+    color: #fff;
+    padding: 10px;
     position: absolute;
+    animation: blink-slow 1s infinite;
     top: 50%;
-    display: inline-block;
-    width: 45px;
-    height: 5px;
-    border-top: solid 2px black;
-    border-bottom: solid 2px black;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-h1:before {
-    left:0;
+@keyframes blink-slow {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
-h1:after {
-    right: 0;
+/*========= 画面遷移のためのCSS ===============*/
+
+/*画面遷移アニメーション*/
+body{
+  background: #fff;
 }
 
-
-.colorchangeanime2_bg {
-    height: 230px;
-    margin: 30px 0;
-    background: rgb(255, 255, 255);
-    background: radial-gradient(circle, rgb(137, 221, 234) 0%, rgb(212, 60, 90) 100%) 0 0 / 200% 100% repeat;
-    animation: colorchangeanimation-bg2 5s infinite alternate;
+body.appear {
+  height: 230px;
+  margin: 30px 0;
+  background: rgb(255, 255, 255);
+  background: radial-gradient(circle, rgb(93, 167, 210) 0%, rgb(44, 249, 242) 100%) 0 0 / 200% 100% repeat;
+  animation: colorchangeanimation-bg2 5s infinite alternate;
 }
-  
+
 @keyframes colorchangeanimation-bg2 {
+  0% {
+      background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+.splashbg{
+  display: none;
+  content: "";
+  position:fixed;
+  transform: scale(100);
+  background: rgb(255, 255, 255);
+  z-index: 999;
+  /*丸のスタートの形状*/
+  top:calc(50% - 1rem);/*50%から円の半径を引いた値*/
+  left:calc(50% - 1rem);/*50%から円の半径を引いた値*/
+  width: 2rem;
+  height: 2rem;
+}
+
+body.appear .splashbg{
+  display: block;
+  border-radius: 50%; 
+  animation-name:PageAnime;
+  animation-duration:1s;
+  animation-fill-mode:forwards;
+}
+
+@keyframes PageAnime{
+    0% {/*丸のスタート位置と形状*/
+      transform: scale(100);
+    
+    }
+    100% {/*丸の終了位置と形状*/
+      transform: scale(0);
+      display: none;/*終了時は消える*/
+    }
+}
+
+#container{
+    opacity: 0;/*はじめは透過0に*/
+}
+
+body.appear #container{
+    animation-name:PageAnimeAppear;
+    animation-duration:1s;
+    animation-delay: 0.8s;
+    animation-fill-mode:forwards;
+    opacity: 0;
+}
+
+@keyframes PageAnimeAppear{
     0% {
-        background-position: 0 0;
+    opacity: 0;
     }
     100% {
-      background-position: 100% 0;
-    }
+    opacity: 1;
+  }
 }
