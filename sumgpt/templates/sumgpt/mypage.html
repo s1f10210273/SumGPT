@@ -6,7 +6,12 @@
 {% endblock %}
 
 {% block body_block %}
-<div class="m-5">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/MP-style.css' %}">
+<div class="splashbg"></div>    
+
+
+<div id="container" class="m-5">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
@@ -137,7 +142,6 @@
         </div>
     </div>
 </div>
-</div>
 
 <script>
     // ページが読み込まれたときにダークモードの状態を取得
@@ -197,5 +201,7 @@
         }
     });
 </script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{% static 'js/SR-style.js' %}"></script>
 
 {% endblock %}
