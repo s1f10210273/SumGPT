@@ -28,11 +28,25 @@ pip install openai
 ```
 pip install python-dotenv
 ```
+GoogleDriveと連携ライブラリ
+```
+pip install pydrive2
+```
+pythonでwordファイルを操作するライブラリ
+```
+pip install python-docx
+```
 ### 4. 環境変数の設定
 ルートディレクトリ直下に`.env`ファイルを作成し、以下の内容を記述
 ```
 OPENAI_API_KEY=<自分のAPIkey>
 ```
+
+sumgpt/pydriveフォルダを作成し`settings.yaml`ファイルを直下に配置
+
+Google認証を行うと、`sumgpt/pydrive/credentials.json`ファイルが生成されます。
+このファイルを消すと認証情報が消えます。
+
 ### 5. マイグレーション
 ```
 python manage.py makemigrations
