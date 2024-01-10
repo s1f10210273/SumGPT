@@ -23,6 +23,7 @@ def sp(request):
         openai.api_key = os.getenv("OPENAI_API_KEY")
         openai.api_base = "https://api.openai.iniad.org/api/v1"
 
+        # 以下の文章がプロンプトです
         question = '次の文章を簡潔に要約して\n' + input_data
 
         response = openai.ChatCompletion.create(
