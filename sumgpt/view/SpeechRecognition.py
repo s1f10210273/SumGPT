@@ -44,7 +44,7 @@ def sp(request):
         sum_data = get_object_or_404(Sum, pk=saved_id)
 
         #wordcloud用の処理
-        WC(user, input_data, saved_id)
+        WC(user, input_data, sum_instance)
 
         return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
     else:
