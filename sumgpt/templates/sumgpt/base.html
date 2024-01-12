@@ -58,6 +58,10 @@
         <!-- mypageページのCSSファイルの読み込み -->
         <link rel="stylesheet" href="{% static 'css/base-style1.css' %}">
         {% endif %}
+        {% if '/sp' in request.path %}
+        <!-- mypageページのCSSファイルの読み込み -->
+        <link rel="stylesheet" href="{% static 'css/base-style2.css' %}">
+        {% endif %}
     </head>
     
 
@@ -65,7 +69,7 @@
     <div class="splashbg"></div><!---画面遷移用-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div id="container" class="container-fluid">
-            <a class="navbar-brand btnripple" href="{% url 'index' %}">SumGPT</a>
+            <a class="navbar-brand logo" href="{% url 'index' %}">SumGPT</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">

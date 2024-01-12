@@ -62,3 +62,32 @@ body.appear #container{
   opacity: 1;
 }
 }
+
+/* custom-style.css */
+#v-pills-home-tab.active {
+    background-color: #5DA7D2; /* ボタンの背景色を青に設定 */
+    color: white; /* テキストの色を白に設定 */
+}
+
+#v-pills-profile-tab.active {
+    background-color: #5DA7D2; /* ボタンの背景色を青に設定 */
+    color: white; /* テキストの色を白に設定 */
+}
+
+
+/* カスタムスタイルを追加するCSSファイル */
+
+/* 奇数行 */
+tr:nth-child(odd) .sum {
+    background-color: #d3efff !important;
+}
+
+
+#passchange {
+    background-color: #5DA7D2; /* ボタンの背景色を青に設定 */
+    color: white; /* テキストの色を白に設定 */
+}
+
+#passchange:hover {
+    background-color: #2368A2; /* ホバー時の背景色を変更 */
+}

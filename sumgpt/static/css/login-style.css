@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, rgb(93, 167, 210) 0%, rgb(44, 249, 242) 100%) 0 0 / 200% 100% repeat;
+    animation: colorchangeanimation-bg2 5s infinite alternate;
+}
+
+#background-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes colorchangeanimation-bg2 {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+      background-position: 100% 0;
+    }
+}
+
+.splashbg{
+  position: fixed;
+  top: 0;
+  right:0;
+  bottom:0;
+  left: 0;
+  border-width: 0px;/*開始はボーダーの太さは0*/
+  border-style:solid;
+    border-color: #fff;/*拡大する四角の色*/
+  animation-duration:.5s;
+  animation-fill-mode:forwards;
+}
+
+
+
+@keyframes backBoxAnime{
+  99.9% {/*アニメーション終了ぎりぎりまで*/
+        z-index: 2;/*最前面に*/
+    border-width: 0px;/*開始はボーダーの太さは0*/
+  }
+    100%{
+       z-index: -1; /*最背面に*/
+        border-width: 0px;/*終了はボーダーの太さは0*/
+    }
+}
+
+/*画面遷移の後現れるコンテンツ設定*/
+#login-container{
+    position: relative;
+  opacity: 0;/*はじめは透過0に*/
+}
+
+/*bodyにappearクラスがついたら出現*/
+body.appear #login-container{
+  animation-name:PageAnimeAppear;
+  animation-duration:1s;
+  animation-delay:0.2s;
+  animation-fill-mode:forwards;
+  opacity: 0;
+}
+
+@keyframes PageAnimeAppear{
+  0% {
+  opacity: 0;
+  }
+  100% {
+  opacity: 1;
+}
+}

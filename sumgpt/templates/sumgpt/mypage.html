@@ -33,7 +33,7 @@
                             <div class="col-4">
                                 <h4>要約一覧</h4>
                             </div>
-                            <div class="col-4">
+                            <div class="col-4" sum>
                                 <form method="get" role="search" class="d-flex">
                                     <input class="form-control me-2" type="search" name="search_query" placeholder="検索">
                                     <button class="btn btn-outline-secondary" type="submit"><i
@@ -52,13 +52,17 @@
                             <tbody>
                                 {% for user_sum in user_sums %}
                                 <tr>
-                                    <td>{{ user_sum.timestamp|date:"Y-m-d" }}</td>
-                                    <td class="text-truncate">
+                                    <td class="sum">{{ user_sum.timestamp|date:"Y-m-d" }}</td>
+                                    <td class="sum text-truncate">
                                         {{ user_sum.sum|slice:":20" }}{% if user_sum.sum|length > 20 %}・・・{% endif %}
                                     </td>
-                                    <td><a href="{% url 'sum' user_sum.id %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-card-text"></i></a>
+                                    <td class="sum">
+                                        <a href="{% url 'sum' user_sum.id %}" class="btn btn-outline-secondary btn-sm">
+                                            <i class="bi bi-card-text"></i>
+                                        </a>
                                     </td>
                                 </tr>
+                                
                                 {% empty %}
                                 <tr>
                                     <td>none</td>
@@ -80,26 +84,26 @@
                     <table class="table table-striped">
                         <tbody>
                             <tr>
-                                <td>アカウント作成日</td>
-                                <td class="text-truncate">
+                                <td class="sum">アカウント作成日</td>
+                                <td class="sum text-truncate">
                                     {{ user.date_joined }}
                                 </td>
                             </tr>
                             <tr>
-                                <td>最終ログイン日</td>
-                                <td class="text-truncate">
+                                <td class="sum">最終ログイン日</td>
+                                <td class="sum text-truncate">
                                     {{ user.last_login }}
                                 </td>
                             </tr>
                             <tr>
-                                <td>ユーザー名</td>
-                                <td class="text-truncate">
+                                <td class="sum">ユーザー名</td>
+                                <td class="sum text-truncate">
                                     {{ user.username }}
                                 </td>
                             </tr>
                             <tr>
-                                <td>メールアドレス</td>
-                                <td class="text-truncate">
+                                <td class="sum">メールアドレス</td>
+                                <td class="sum text-truncate">
                                     {{ user.email }}
                                 </td>
                             </tr>
@@ -107,7 +111,7 @@
                     </table>
 
                     <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-secondary m-1" id="passchange" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             パスワード変更
                         </button>
