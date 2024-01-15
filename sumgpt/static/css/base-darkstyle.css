@@ -2,6 +2,7 @@
     display:inline-block;
     font-size: 25px;
     padding: 10px 10px;
+    color: #afafaf;
 }
 
 .btnripple{
@@ -23,7 +24,7 @@
 
 .btnripple:hover {
     color: #5DA7D2;
-	background: #150202;
+	background: #ffffff;
 }
 
 .btnripple::after {
@@ -58,8 +59,8 @@
     /*ボタンの形状*/
     text-decoration: none;
   display:inline-block;
-  background: #fff;
-  color: #5DA7D2;
+  background: #5DA7D2;
+  color: #0f003f;
   padding: 10px 20px;
   border-radius: 25px;
   border: 2px solid #5DA7D2;
@@ -71,8 +72,8 @@
 }
 
 .btn_01:hover {
-    color: #fff;
-	background: #5DA7D2;
+    color: #afafaf;
+	background: #2368A2;
 }
 
 .btn_01::after {
@@ -107,8 +108,8 @@
     /*ボタンの形状*/
     text-decoration: none;
   display:inline-block;
-  background: #5DA7D2;
-  color: #ffffff;
+  background: #0f003f;
+  color: #5DA7D2;
   padding: 10px 20px;
   border-radius: 25px;
   border: 2px solid #5DA7D2;
@@ -117,8 +118,8 @@
 }
 
 .btn_02:hover {
-    color: #fff;
-	background: #2368A2;
+    color: #0f003f;
+	background: #5DA7D2;
 }
 
 .btn_02::after {
@@ -144,6 +145,7 @@
     transition: 0s;
     opacity: 0.3;
 }
+
 
 .splashbg{
     display: none;

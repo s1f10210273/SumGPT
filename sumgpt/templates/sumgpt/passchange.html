@@ -7,6 +7,36 @@ password change
 
 {% block body_block %}
 
+{% load static %}
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+    var basePath = "{% static 'css/' %}";
+    var styleLink = document.createElement('link');
+    styleLink.rel = 'stylesheet';
+    styleLink.type = 'text/css';
+
+    // ページ読み込み時に初期のスタイルをセット
+    setAppropriateStyle();
+
+    function setAppropriateStyle() {
+        if (isDarkMode) {
+            styleLink.href = basePath + 'PC-darkstyle.css';
+        } else {
+            styleLink.href = basePath + 'PC-style.css';
+        }
+        document.head.appendChild(styleLink);
+    }
+
+    // ダークモードの状態が変更されたらスタイルを切り替える
+    window.addEventListener('storage', function (e) {
+        if (e.key === 'darkMode') {
+            isDarkMode = e.newValue === 'enabled';
+            setAppropriateStyle();
+        }
+    });
+</script>
+
+<body>
 {% if form.errors %}
 <div class="alert alert-danger fade show" role="alert">
     <strong>エラーが発生しました：</strong>
@@ -19,18 +49,23 @@ password change
     </ul>
 </div>
 {% endif %}
-<form method="post" action="{% url 'passchange' %}" class="form-group">
+<form method="post" action="{% url 'passchange' %}" class="form-group pass1">
     {% csrf_token %}
     {% for item in form %}
-    <div class="form-group mb-3">
+    <div class="form-group mb-3 pass1">
         <label for="{{item.id_for_label}}">{{item.label}}</label>
-        <input type="{{item.field.widget.input_type}}" class="form-control"
+        <input type="{{item.field.widget.input_type}}" class="form-control pass"
             {% if item.field.required %}required{% endif %} name="{{item.name}}" id="{{item.id_for_label}}">
     </div>
     {% endfor %}
-    <div class="text-center">
-        <button type="submit" class="submit btn btn-secondary">変更</button>
+    <div class="text-center pass2">
+        <button type="submit" class="submit btn btn-secondary" id="change">変更</button>
     </div>
 </form>
+
+<link rel="stylesheet" id="styleLink">
+
+</body>
+
 
 {% endblock %}

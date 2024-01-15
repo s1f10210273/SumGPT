@@ -50,18 +50,73 @@
                 z-index: 1000; /* 他の要素より前面に表示 */
             }
         </style>
-        {% if '/SpeechRecognition' in request.path %}
-        <!-- SpeechRecognitionページのCSSファイルの読み込み -->
-        <link rel="stylesheet" href="{% static 'css/base-style.css' %}">
-        {% endif %}
-        {% if '/auth/mypage' in request.path %}
-        <!-- mypageページのCSSファイルの読み込み -->
-        <link rel="stylesheet" href="{% static 'css/base-style1.css' %}">
-        {% endif %}
-        {% if '/sp' in request.path %}
-        <!-- mypageページのCSSファイルの読み込み -->
-        <link rel="stylesheet" href="{% static 'css/base-style2.css' %}">
-        {% endif %}
+        <script>
+            var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+            var basePath = "{% static 'css/' %}";
+    
+            if (isDarkMode) {
+                {% if '/SpeechRecognition' in request.path %}
+                    document.write('<link rel="stylesheet" href="' + basePath + 'base-darkstyle.css">');
+                {% endif %}
+                {% if '/auth/mypage' in request.path %}
+                    document.write('<link rel="stylesheet" href="' + basePath + 'base-darkstyle1.css">');
+                {% endif %}
+                {% if '/sp' in request.path %}
+                    document.write('<link rel="stylesheet" href="' + basePath + 'base-darkstyle2.css">');
+                {% endif %}
+                
+            } else{
+                {% if '/SpeechRecognition' in request.path %}
+                    document.write('<link rel="stylesheet" href="' + basePath + 'base-style.css">');
+                {% endif %}
+                {% if '/auth/mypage' in request.path %}
+                    document.write('<link rel="stylesheet" href="' + basePath + 'base-style1.css">');
+                {% endif %}
+                {% if '/sp' in request.path %}
+                    document.write('<link rel="stylesheet" href="' + basePath + 'base-style2.css">');
+                {% endif %}
+            }
+        </script>
+        <script>
+            var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+            var basePath = "{% static 'css/' %}";
+    
+            function applyDarkModeStyles() {
+                if (isDarkMode) {
+                    {% if '/SpeechRecognition' in request.path %}
+                        $('head').append('<link rel="stylesheet" href="' + basePath + 'base-darkstyle.css">');
+                    {% endif %}
+                    {% if '/auth/mypage' in request.path %}
+                        $('head').append('<link rel="stylesheet" href="' + basePath + 'base-darkstyle1.css">');
+                    {% endif %}
+                    {% if '/sp' in request.path %}
+                        $('head').append('<link rel="stylesheet" href="' + basePath + 'base-darkstyle2.css">');
+                    {% endif %}
+                } else {
+                    {% if '/SpeechRecognition' in request.path %}
+                        $('head').append('<link rel="stylesheet" href="' + basePath + 'base-style.css">');
+                    {% endif %}
+                    {% if '/auth/mypage' in request.path %}
+                        $('head').append('<link rel="stylesheet" href="' + basePath + 'base-style1.css">');
+                    {% endif %}
+                    {% if '/sp' in request.path %}
+                        $('head').append('<link rel="stylesheet" href="' + basePath + 'base-style2.css">');
+                    {% endif %}
+                }
+            }
+    
+            applyDarkModeStyles(); // 初期設定
+    
+            // ページが読み込まれたときにダークモードの状態を取得
+            var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+    
+            // ダークモードスイッチの状態に応じてdata-bs-theme属性を設定
+            if (isDarkMode) {
+                document.body.setAttribute('data-bs-theme', 'dark');
+            } else {
+                document.body.removeAttribute('data-bs-theme');
+            }
+        </script>
     </head>
     
 
@@ -115,6 +170,14 @@
         } else {
             document.body.removeAttribute('data-bs-theme');
         }
+    </script>
+    <script>
+        // ダークモードスイッチが変更されたときに即座にスタイルを適用
+        $('.form-switch input').change(function () {
+            isDarkMode = this.checked;
+            localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+            applyDarkModeStyles();
+        });
     </script>
     <script>
         // ページが読み込まれたときにフォントスイッチの状態を取得

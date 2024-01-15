@@ -7,9 +7,7 @@
 
 {% block body_block %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/MP-style.css' %}">
-<div class="splashbg"></div>    
-
+<link id="styleSheet" rel="stylesheet" href="{% static 'css/MP-style.css' %}">
 
 <div id="container" class="m-5">
     <div class="container-fluid">
@@ -115,7 +113,7 @@
                             data-bs-target="#exampleModal">
                             パスワード変更
                         </button>
-                        <a href="{% url 'logout' %}" class="btn btn-danger m-1">ログアウト</a>
+                        <a href="{% url 'logout' %}" class="btn btn-danger m-1" id="danger">ログアウト</a>
                     </div>
 
 
@@ -146,6 +144,7 @@
         </div>
     </div>
 </div>
+
 
 <script>
     // ページが読み込まれたときにダークモードの状態を取得
@@ -202,6 +201,38 @@
             // チェックされていない場合、デフォルトのフォントに戻す
             $('body').css('font-family', 'sans-serif');
             localStorage.setItem('fontSwitch', 'disabled');
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // ページが読み込まれたときにダークモードの状態を取得
+        var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+
+        // ダークモードスイッチのチェック状態を設定
+        document.getElementById('darkModeSwitch').checked = isDarkMode;
+
+        // ダークモードの適用
+        applyDarkMode(isDarkMode);
+
+        // ダークモードスイッチの変更イベントを監視
+        document.getElementById('darkModeSwitch').addEventListener('change', function () {
+            var darkModeEnabled = this.checked;
+            localStorage.setItem('darkMode', darkModeEnabled ? 'enabled' : 'disabled');
+            // ダークモードの適用
+            applyDarkMode(darkModeEnabled);
+        });
+
+        // 適用するCSSを変更する関数
+        function applyDarkMode(darkModeEnabled) {
+            var styleSheet = document.getElementById('styleSheet');
+            if (darkModeEnabled) {
+                document.body.setAttribute('data-bs-theme', 'dark');
+                styleSheet.href = "{% static 'css/MP-darkstyle.css' %}";
+            } else {
+                document.body.removeAttribute('data-bs-theme');
+                styleSheet.href = "{% static 'css/MP-style.css' %}";
+            }
         }
     });
 </script>

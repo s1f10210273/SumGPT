@@ -1,5 +1,3 @@
-
-
 .splashbg{
     display: none;
 }
@@ -68,10 +66,15 @@ body.appear #container{
 #sumButton,
 #startButton {
     background-color: #5DA7D2; /* ボタンの背景色を青に設定 */
-    color: white; /* テキストの色を白に設定 */
+    color: #0f003f; /* テキストの色を白に設定 */
 }
 
 #sumButton:hover,
 #startButton:hover {
     background-color: #2368A2; /* ホバー時の背景色を変更 */
+}
+
+#rec,
+#stopButton{
+    color: #0f003f;
 }

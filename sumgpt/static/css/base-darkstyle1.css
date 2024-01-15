@@ -2,6 +2,7 @@
     display:inline-block;
     font-size: 25px;
     padding: 10px 10px;
+    color: #afafaf;
 }
 
 .btnripple{
@@ -58,7 +59,7 @@
     /*ボタンの形状*/
     text-decoration: none;
   display:inline-block;
-  background: #fff;
+  background: #0f003f;
   color: #5DA7D2;
   padding: 10px 20px;
   border-radius: 25px;
@@ -71,7 +72,7 @@
 }
 
 .btn_01:hover {
-    color: #fff;
+    color: #0f003f;
 	background: #5DA7D2;
 }
 
@@ -108,7 +109,7 @@
     text-decoration: none;
   display:inline-block;
   background: #5DA7D2;
-  color: #ffffff;
+  color: #0f003f;
   padding: 10px 20px;
   border-radius: 25px;
   border: 2px solid #5DA7D2;
@@ -117,7 +118,7 @@
 }
 
 .btn_02:hover {
-    color: #fff;
+    color: #afafaf;
 	background: #2368A2;
 }
 

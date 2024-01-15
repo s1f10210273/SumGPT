@@ -11,9 +11,9 @@
 }
 
 #splash-logo {
-    background: #5DA7D2;
+    background: #ffffff;
     font-size: 50px;
-    color: #fff;
+    color: #000000;
     padding: 10px;
     position: absolute;
     animation: blink-slow 1s infinite;
@@ -143,7 +143,7 @@ button.btn1 {
     linear,
     left top,
     right top,
-    color-stop(40%, #ff3cac),
+    color-stop(40%, #3ce8ff),
     to(#562b7c)
   );
   background-image: -webkit-linear-gradient(left, #ff3cac 40%, #562b7c 100%);

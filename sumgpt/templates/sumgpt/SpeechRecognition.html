@@ -8,7 +8,17 @@ index
 {% block body_block %}
 
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/SR-style.css' %}">
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+    var basePath = "{% static 'css/' %}";
+
+    // ダークモードが有効ならダークモード用のCSSを、無効なら通常のCSSを読み込む
+    if (isDarkMode) {
+        document.write('<link rel="stylesheet" href="' + basePath + 'SR-darkstyle.css">');
+    } else {
+        document.write('<link rel="stylesheet" href="' + basePath + 'SR-style.css">');
+    }
+</script>
 
 <div class="splashbg"></div><!---画面遷移用-->
 <div id="container" class="container">

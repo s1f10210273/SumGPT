@@ -73,3 +73,37 @@ body.appear #login-container{
   opacity: 1;
 }
 }
+
+
+.login{
+    background-color: #5DA7D2;
+    color: #FFF;
+}
+
+.login:hover{
+    background-color: #2368A2;
+}
+
+
+.kochira{
+    color: #dbdbdb !important;
+    position: relative;
+    display: inline-block;
+    transition: .3s;
+}
+  
+.kochira::after {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    content: '';
+    width: 0;
+    height: 2px;
+    background-color: #0f003f;
+    transition: .3s;
+    transform: translateX(-50%);
+}
+  
+.kochira:hover::after{
+    width: 100%;
+}
