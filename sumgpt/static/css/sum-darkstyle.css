@@ -1,0 +1,13 @@
+#cansel,
+#time{
+    background-color: #5DA7D2;
+    color: #0f003f !important;
+}
+
+#cansel:hover {
+    background-color: #2368A2; /* ホバー時の背景色を変更 */
+}
+
+.DB{
+    color: #0f003f !important;
+}

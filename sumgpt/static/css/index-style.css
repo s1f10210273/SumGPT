@@ -1,0 +1,198 @@
+/*========= ローディング画面のためのCSS ===============*/
+
+#splash {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 9999999;
+    text-align:center;
+    color:#333;
+}
+
+#splash-logo {
+    background: #ffffff;
+    font-size: 50px;
+    color: #000000;
+    padding: 10px;
+    position: absolute;
+    animation: blink-slow 1s infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 25px;
+}
+
+@keyframes blink-slow {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/*========= 画面遷移のためのCSS ===============*/
+
+/*画面遷移アニメーション*/
+body{
+  background: #fff;
+}
+
+body.appear {
+  height: 230px;
+  background: rgb(255, 255, 255);
+  background: radial-gradient(circle, rgb(93, 167, 210) 0%, rgb(44, 249, 242) 100%) 0 0 / 200% 100% repeat;
+  animation: colorchangeanimation-bg2 5s infinite alternate;
+}
+
+@keyframes colorchangeanimation-bg2 {
+  0% {
+      background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+.splashbg{
+  display: none;
+  content: "";
+  position:fixed;
+  transform: scale(100);
+  background: rgb(255, 255, 255);
+  z-index: 999;
+  /*丸のスタートの形状*/
+  top:calc(50% - 1rem);/*50%から円の半径を引いた値*/
+  left:calc(50% - 1rem);/*50%から円の半径を引いた値*/
+  width: 2rem;
+  height: 2rem;
+}
+
+body.appear .splashbg{
+  display: block;
+  border-radius: 50%; 
+  animation-name:PageAnime;
+  animation-duration:1s;
+  animation-fill-mode:forwards;
+}
+
+@keyframes PageAnime{
+    0% {/*丸のスタート位置と形状*/
+      transform: scale(100);
+    
+    }
+    100% {/*丸の終了位置と形状*/
+      transform: scale(0);
+      display: none;/*終了時は消える*/
+    }
+}
+
+#container{
+    opacity: 0;/*はじめは透過0に*/
+}
+
+body.appear #container{
+    animation-name:PageAnimeAppear;
+    animation-duration:1s;
+    animation-delay: 0.8s;
+    animation-fill-mode:forwards;
+    opacity: 0;
+}
+
+@keyframes PageAnimeAppear{
+    0% {
+    opacity: 0;
+    }
+    100% {
+    opacity: 1;
+  }
+}
+
+.btn1,
+a.btn1,
+button.btn1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  padding: 1rem 4rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  border-radius: 0.5rem;
+}
+
+.btn-gradient {
+  font-weight: normal;
+  border-radius: 100vh;
+  color: #fff;
+  border-radius: 0;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(40%, #ff3cac),
+    to(#562b7c)
+  );
+  background-image: -webkit-linear-gradient(left, #ff3cac 40%, #562b7c 100%);
+  background-image: linear-gradient(90deg, #ff3cac 40%, #562b7c 100%);
+}
+
+
+
+.btn-gradient:after {
+  position: absolute;
+  border-radius: 100vh;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  content: "";
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#ff3cac),
+    color-stop(#562b7c),
+    to(#2b86c5)
+  );
+
+  background-image: -webkit-linear-gradient(left, #ff3cac, #562b7c, #2b86c5);
+
+  background-image: linear-gradient(90deg, #ff3cac, #562b7c, #2b86c5);
+}
+
+a.btn-gradient span {
+  position: relative;
+  z-index: 1;
+}
+
+a.btn-gradient:hover {
+  color: #fff;
+}
+
+a.btn-gradient:hover:after {
+  opacity: 0;
+}
+
+a.btn-gradient {
+  border-radius: 100vh;
+  font-size: 25px;
+}

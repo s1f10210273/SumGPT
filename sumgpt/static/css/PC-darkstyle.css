@@ -1,0 +1,23 @@
+#change{
+    background-color: #5DA7D2;
+    color: #0f003f;
+    
+}
+
+#change:hover{
+    background-color: #2368A2;
+}
+
+body{
+    background-color: #212529;
+}
+
+.pass {
+    background-color: #a49fb4;
+}
+
+
+
+.form-group label {
+    color: #afafaf;
+}

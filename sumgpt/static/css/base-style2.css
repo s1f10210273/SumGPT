@@ -1,0 +1,149 @@
+.logo{
+    display:inline-block;
+    font-size: 25px;
+    padding: 10px 10px;
+    color: black;
+}
+
+.btnripple{
+    /*波紋の基点とするためrelativeを指定*/
+  position: relative;
+    /*はみ出す波紋を隠す*/
+  overflow: hidden;
+    /*ボタンの形状*/
+    text-decoration: none;
+  display:inline-block;
+  background: #5DA7D2;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 2px solid #5DA7D2;
+  transition: 0.5s;
+    outline: none;
+}
+
+.btnripple:hover {
+    color: #5DA7D2;
+	background: #ffffff;
+}
+
+.btnripple::after {
+    content: "";
+    /*絶対配置で波紋位置を決める*/
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /*波紋の形状*/
+    background: radial-gradient(circle, #fff 10%, transparent 10%) no-repeat 50%;
+    transform: scale(10, 10);
+    /*はじめは透過0に*/
+    opacity: 0;
+    /*アニメーションの設定*/
+    transition: transform 0.3s, opacity 1s;
+}
+
+/*クリックされたあとの形状の設定*/
+.btnripple:active::after {
+    transform: scale(0, 0);
+    transition: 0s;
+    opacity: 0.3;
+}
+
+.btn_01{
+    /*波紋の基点とするためrelativeを指定*/
+  position: relative;
+    /*はみ出す波紋を隠す*/
+  overflow: hidden;
+    /*ボタンの形状*/
+    text-decoration: none;
+  display:inline-block;
+  background: #5DA7D2;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 2px solid #5DA7D2;
+  transition: 0.5s;
+    outline: none;
+    width: 120px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.btn_01:hover {
+    color: #fff;
+	background: #2368A2;
+}
+
+.btn_01::after {
+    content: "";
+    /*絶対配置で波紋位置を決める*/
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /*波紋の形状*/
+    background: radial-gradient(circle, #fff 10%, transparent 10%) no-repeat 50%;
+    transform: scale(10, 10);
+    /*はじめは透過0に*/
+    opacity: 0;
+    /*アニメーションの設定*/
+    transition: transform 0.3s, opacity 1s;
+}
+
+/*クリックされたあとの形状の設定*/
+.btn_01:active::after {
+    transform: scale(0, 0);
+    transition: 0s;
+    opacity: 0.3;
+}
+
+.btn_02{
+    /*波紋の基点とするためrelativeを指定*/
+  position: relative;
+    /*はみ出す波紋を隠す*/
+  overflow: hidden;
+    /*ボタンの形状*/
+    text-decoration: none;
+  display:inline-block;
+  background: #fff;
+  color: #5DA7D2;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 2px solid #5DA7D2;
+  transition: 0.5s;
+    outline: none;
+}
+
+.btn_02:hover {
+    color: #fff;
+	background: #5DA7D2;
+}
+
+.btn_02::after {
+    content: "";
+    /*絶対配置で波紋位置を決める*/
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /*波紋の形状*/
+    background: radial-gradient(circle, #fff 10%, transparent 10%) no-repeat 50%;
+    transform: scale(10, 10);
+    /*はじめは透過0に*/
+    opacity: 0;
+    /*アニメーションの設定*/
+    transition: transform 0.3s, opacity 1s;
+}
+
+/*クリックされたあとの形状の設定*/
+.btn_02:active::after {
+    transform: scale(0, 0);
+    transition: 0s;
+    opacity: 0.3;
+}
+
+

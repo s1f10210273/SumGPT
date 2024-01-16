@@ -1,0 +1,212 @@
+.logo{
+    display:inline-block;
+    font-size: 25px;
+    padding: 10px 10px;
+    color: #afafaf;
+}
+
+.btnripple{
+    /*波紋の基点とするためrelativeを指定*/
+  position: relative;
+    /*はみ出す波紋を隠す*/
+  overflow: hidden;
+    /*ボタンの形状*/
+    text-decoration: none;
+  display:inline-block;
+  background: #5DA7D2;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 2px solid #5DA7D2;
+  transition: 0.5s;
+    outline: none;
+}
+
+.btnripple:hover {
+    color: #5DA7D2;
+	background: #150202;
+}
+
+.btnripple::after {
+    content: "";
+    /*絶対配置で波紋位置を決める*/
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /*波紋の形状*/
+    background: radial-gradient(circle, #fff 10%, transparent 10%) no-repeat 50%;
+    transform: scale(10, 10);
+    /*はじめは透過0に*/
+    opacity: 0;
+    /*アニメーションの設定*/
+    transition: transform 0.3s, opacity 1s;
+}
+
+/*クリックされたあとの形状の設定*/
+.btnripple:active::after {
+    transform: scale(0, 0);
+    transition: 0s;
+    opacity: 0.3;
+}
+
+.btn_01{
+    /*波紋の基点とするためrelativeを指定*/
+  position: relative;
+    /*はみ出す波紋を隠す*/
+  overflow: hidden;
+    /*ボタンの形状*/
+    text-decoration: none;
+  display:inline-block;
+  background: #0f003f;
+  color: #5DA7D2;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 2px solid #5DA7D2;
+  transition: 0.5s;
+    outline: none;
+    width: 120px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.btn_01:hover {
+    color: #0f003f;
+	background: #5DA7D2;
+}
+
+.btn_01::after {
+    content: "";
+    /*絶対配置で波紋位置を決める*/
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /*波紋の形状*/
+    background: radial-gradient(circle, #fff 10%, transparent 10%) no-repeat 50%;
+    transform: scale(10, 10);
+    /*はじめは透過0に*/
+    opacity: 0;
+    /*アニメーションの設定*/
+    transition: transform 0.3s, opacity 1s;
+}
+
+/*クリックされたあとの形状の設定*/
+.btn_01:active::after {
+    transform: scale(0, 0);
+    transition: 0s;
+    opacity: 0.3;
+}
+
+.btn_02{
+    /*波紋の基点とするためrelativeを指定*/
+  position: relative;
+    /*はみ出す波紋を隠す*/
+  overflow: hidden;
+    /*ボタンの形状*/
+    text-decoration: none;
+  display:inline-block;
+  background: #5DA7D2;
+  color: #0f003f;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 2px solid #5DA7D2;
+  transition: 0.5s;
+    outline: none;
+}
+
+.btn_02:hover {
+    color: #afafaf;
+	background: #2368A2;
+}
+
+.btn_02::after {
+    content: "";
+    /*絶対配置で波紋位置を決める*/
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /*波紋の形状*/
+    background: radial-gradient(circle, #fff 10%, transparent 10%) no-repeat 50%;
+    transform: scale(10, 10);
+    /*はじめは透過0に*/
+    opacity: 0;
+    /*アニメーションの設定*/
+    transition: transform 0.3s, opacity 1s;
+}
+
+/*クリックされたあとの形状の設定*/
+.btn_02:active::after {
+    transform: scale(0, 0);
+    transition: 0s;
+    opacity: 0.3;
+}
+
+.splashbg{
+    display: none;
+}
+
+/*bodyにappearクラスがついたら出現*/
+body.appear .splashbg{
+    display: block;
+    content: "";
+    position:fixed;
+  z-index: 999;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+  left: 0;
+    transform: scaleX(0);
+    background-color: #5DA7D2;/*伸びる背景色の設定*/
+  animation-name:PageAnime;
+  animation-duration:1.2s;
+  animation-timing-function:ease-in-out;
+  animation-fill-mode:forwards;
+
+}
+
+@keyframes PageAnime{
+  0% {
+    transform-origin:right;
+    transform:scaleX(0);
+  }
+  50% {
+    transform-origin:right;
+    transform:scaleX(1);
+  }
+  50.001% {
+    transform-origin:left;
+  }
+  100% {
+    transform-origin:left;
+    transform:scaleX(0);
+  }
+}
+
+/*画面遷移の後現れるコンテンツ設定*/
+
+#container{
+  opacity: 0;/*はじめは透過0に*/
+}
+
+/*bodyにappearクラスがついたら出現*/
+body.appear #container{
+  animation-name:PageAnimeAppear;
+  animation-duration:1s;
+  animation-delay: 0.8s;
+  animation-fill-mode:forwards;
+  opacity: 0;
+}
+
+@keyframes PageAnimeAppear{
+  0% {
+  opacity: 0;
+  }
+  100% {
+  opacity: 1;
+}
+}

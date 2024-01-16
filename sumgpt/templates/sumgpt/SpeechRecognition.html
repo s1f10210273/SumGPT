@@ -6,7 +6,22 @@ index
 {% endblock %}
 
 {% block body_block %}
-<div class="container">
+
+{% load static %}
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+    var basePath = "{% static 'css/' %}";
+
+    // ダークモードが有効ならダークモード用のCSSを、無効なら通常のCSSを読み込む
+    if (isDarkMode) {
+        document.write('<link rel="stylesheet" href="' + basePath + 'SR-darkstyle.css">');
+    } else {
+        document.write('<link rel="stylesheet" href="' + basePath + 'SR-style.css">');
+    }
+</script>
+
+<div class="splashbg"></div><!---画面遷移用-->
+<div id="container" class="container">
     <div class="row mt-5">
         <div class="col-md-6 offset-md-3">
             <div class="mb-3">
@@ -182,6 +197,9 @@ index
         }
 
 </script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{% static 'js/SR-style.js' %}"></script>
+
 
 
 {% endblock %}
