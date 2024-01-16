@@ -6,15 +6,27 @@
 {% endblock %}
 
 {% block body_block %}
+{% load static %}
+<script>
+    var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+    var basePath = "{% static 'css/' %}";
+
+    // ダークモードが有効ならダークモード用のCSSを、無効なら通常のCSSを読み込む
+    if (isDarkMode) {
+        document.write('<link rel="stylesheet" href="' + basePath + 'sum-darkstyle.css">');
+    } else {
+        document.write('<link rel="stylesheet" href="' + basePath + 'sum-style.css">');
+    }
+</script>
 <div class="m-5">
     <h1 class="text-center m-4">要約の詳細</h1>
     <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.sum }}</textarea>
-    <span class="badge rounded-pill text-bg-dark float-end">{{ sum_data.timestamp }}</span>
-    <button class="btn btn-danger" id="deleteButton">削除</button>
-    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <span class="badge rounded-pill text-bg-dark float-end" id="timestamp">{{ sum_data.timestamp }}</span>
+    <button class="btn btn-danger DB" id="deleteButton">削除</button>
+    <button type="button" class="btn btn-secondary DB" id="time2" data-bs-toggle="modal" data-bs-target="#exampleModal">
         文字起こしの確認
     </button>
-    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#saveDocsModal">
+    <button type="button" class="btn btn-secondary DB" id="time3"  data-bs-toggle="modal" data-bs-target="#saveDocsModal">
         保存
     </button>
     <!--GoogleDriveへのファイル保存の結果を格納-->
@@ -35,8 +47,8 @@
                 本当に削除しますか？
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
-                <a href="{% url 'sumdel' sum_data.id %}" class="btn btn-danger">削除</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cansel">キャンセル</button>
+                <a href="{% url 'sumdel' sum_data.id %}" class="btn btn-danger DB">削除</a>
             </div>
         </div>
     </div>

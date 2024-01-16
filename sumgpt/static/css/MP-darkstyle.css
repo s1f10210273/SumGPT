@@ -92,3 +92,18 @@ body.appear #container{
 #danger{
     color: #0f003f;
 }
+
+.additional-content {
+  display: none; /* 初期状態では非表示 */
+  position: absolute;
+  top: -50px; /* 上方向に配置、調整が必要な場合は適宜調整してください */
+  left: 0;
+  background-color: #212529;
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+  z-index: 1;
+}
+
+.sum:hover .additional-content {
+  display: block; /* ホバー時に表示 */
+}

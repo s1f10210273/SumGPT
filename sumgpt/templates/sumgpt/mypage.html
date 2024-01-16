@@ -49,18 +49,15 @@
                             </thead>
                             <tbody>
                                 {% for user_sum in user_sums %}
-                                <tr>
-                                    <td class="sum">{{ user_sum.timestamp|date:"Y-m-d" }}</td>
-                                    <td class="sum text-truncate">
                                 <tr class="column">
-                                    <td>{{ user_sum.timestamp|date:"Y-m-d" }}
+                                    <td class="sum">{{ user_sum.timestamp|date:"Y-m-d" }}
                                     </td>
-                                    <td class="text-truncate">
+                                    <td class="sum text-truncate">
                                         <div class="additional-content2">
                                         {{ user_sum.sum|slice:":20" }}{% if user_sum.sum|length > 20 %}・・・{% endif %}
-                                    </div>
+                                        </div>
                                         <div class="additional-content alert alert-secondary">
-                                                {{ user_sum.sum }}
+                                            {{ user_sum.sum }}
                                         </div>
                                     </td>
                                     <td class="sum">
@@ -135,27 +132,10 @@
                                 </div>
                                 <div class="modal-body text-center" style="height: 350px;">
                                     <iframe src="{% url 'passchange' %}"style="border: none; width: 100%; height: 100%;"></iframe>
-                        <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            パスワード変更
-                        </button>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">パスワード変更</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body text-center" style="height: 350px;">
-                                        <iframe src="{% url 'passchange' %}"style="border: none; width: 100%; height: 100%;"></iframe>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-end">
-                        <a href="{% url 'logout' %}" class="btn btn-danger m-1">ログアウト</a>
-                    </div>
-
 
                     <div class="kakusi">
                         <div class="form-check form-switch">

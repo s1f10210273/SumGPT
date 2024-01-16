@@ -1,13 +1,23 @@
 #cansel,
-#time{
+#download-button,
+#drive-button,
+#time2,
+#time3 {
     background-color: #5DA7D2;
     color: #0f003f !important;
 }
 
+#download-button:hover,
+#drive-button:hover,
 #cansel:hover {
     background-color: #2368A2; /* ホバー時の背景色を変更 */
 }
 
 .DB{
     color: #0f003f !important;
+}
+
+#timestamp {
+    color: #0f003f !important;
+    background-color: #5DA7D2 !important;
 }

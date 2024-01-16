@@ -215,10 +215,8 @@
                 <!-- 右寄りのアイテム -->
                 <ul class="navbar-nav ml-auto">
                     {% if request.user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link btn_02" href="{% url 'mypage' %}">{{ user.username }}</a>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        <a class="nav-link dropdown-toggle btn_02" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             {{ user.username }}
                         </a>
