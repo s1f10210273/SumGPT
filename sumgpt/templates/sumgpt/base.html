@@ -117,8 +117,83 @@
                 document.body.removeAttribute('data-bs-theme');
             }
         </script>
-    </head>
     
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        @font-face {
+            font-family: 'MyCustomFont';
+            src: url("{% static 'fonts/Kaisotai-Next-UP-B.woff2' %}") format('woff2'),
+            url("{% static 'fonts/Kaisotai-Next-UP-B.eot' %}") format('embedded-opentype');
+        }
+
+        body {
+            font-family: 'MyCustomFont', sans-serif;
+        }
+
+        .custom-tabs .nav-link {
+            color: #adb5bd;
+        }
+
+        .custom-tabs .nav-link.active {
+            background-color: #adb5bd;
+            color: #000;
+        }
+
+        .form-check .form-check-input:checked {
+            background-color: gray;
+            /* スイッチがONのときの背景色 */
+            border-color: gray;
+            /* スイッチの枠線色 */
+        }
+
+        .form-check-label {
+            color: gray;
+            /* スイッチのテキスト色 */
+        }
+
+        .form-switch .form-check-input {
+            transform: scale(1.5);
+            /* スイッチのサイズを調整 */
+        }
+
+        .kakusi {
+            position: fixed;
+            bottom: 20px;
+            /* 画面下端からの距離を調整 */
+            right: 20px;
+            /* 画面右端からの距離を調整 */
+            z-index: 1000;
+            /* 他の要素より前面に表示 */
+        }
+
+        .additional-content {
+            display: block;
+            position: fixed;
+            white-space: normal;
+            top: 1%;
+            left: 5%;
+            width: 90%;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .column:hover .additional-content {
+            display: block;
+            position: fixed;
+            white-space: normal;
+            top: 1%;
+            left: 5%;
+            width: 90%;
+            z-index: 9999;
+            opacity: 0.9; /* 要素を不透明にする */
+        }
+        
+        
+        
+        
+    </style>
+</head>
 
 <body>
     <div class="splashbg"></div><!---画面遷移用-->
@@ -142,6 +217,15 @@
                     {% if request.user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link btn_02" href="{% url 'mypage' %}">{{ user.username }}</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'mypage' %}">マイページ</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">ログアウト</a></li>
+                        </ul>
                     </li>
                     {% else %}
                     <li class="nav-item">
@@ -192,4 +276,5 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="{% static 'js/SR-style.js' %}"></script>
 </body>
+
 </html>

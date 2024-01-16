@@ -32,6 +32,24 @@ index
                     <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     録音中
                 </button>
+
+
+                {% comment %} 業界指定の実装 {% endcomment %}
+                <select id="inputState" class="form-select">
+                    <option selected>業界を指定</option>
+                    {% comment %} 下の[selectedOption]には、このvalueの値が入る {% endcomment %}
+                    <option value="1">農業・林業・漁業</option>
+                    <option value="2">建設業</option>
+                    <option value="3">電気・ガス・熱供給・水道業</option>
+                    <option value="4">製造業</option>
+                    <option value="5">運輸業</option>
+                    <option value="6">情報通信業</option>
+                    <option value="7">卸売・小売業</option>
+                    <option value="8">金融・保険業</option>
+                    <option value="9">飲食・宿泊業</option>
+                    <option value="10">不動産業</option></select>
+
+
             </div>
             <div class="mb-3">
                 <form method="post" action="{% url 'sp' %}">
@@ -64,14 +82,83 @@ index
         startButton.addEventListener('click', () => {
             isRecognizing = false;
             if (!isRecognizing) {
-                recognition.start();
-                //下の関数の呼び出し
-                startrec();
-                startButton.style.display = 'none';
-                stopButton.style.display = 'inline-block';
-                rec.style.display = 'inline-block';
-            }
-        });
+
+
+                    //単語登録
+                    const grammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 決定 | 判断 | 理由 | 案件 | 否決 | 再検討 | 再調整 | 保留 | 資料 | 補足資料 | 参考意見 | 社長一任 | アサイン ;';
+
+                    const SpeechGrammarList = window.webkitSpeechGrammarList || window.SpeechGrammarList;
+                    const speechRecognitionList = new SpeechGrammarList();
+                    speechRecognitionList.addFromString(grammar, 1);
+
+                    //業界選択をした場合の処理
+                    const selectElement = document.getElementById("inputState");
+                    const selectedOption = selectElement.options[selectElement.selectedIndex].value;
+                    if (selectedOption == 1) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 価格均一化 | 希少性 | 安定供給 | ブランド | リサイクル | 再生材料・リサイクル材料 | 企業ネットワーク | 手作り生産 | 独自技術 | 有機栽培 | 受託生産 | 特許保有 | 販売店販売 | チェーン展開 | タイアップ販売 | サンプル販売 | 保証期間延長 | トレーサビリティ ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+
+                    else if (selectedOption == 2) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 価格均一化 | 独自技術 | 希少性 | 信頼性 | 高技能人材 | 再生材料・リサイクル材料 | 直接仕入れ | プレ加工生産 | 現場加工 | 独自技術 | 受託生産 | 一括請負 | 事業連携 | 中間検査 | 特許保有 | 独自営業力 | 提案販売 | 販売店販売 | チェーン展開 | タイアップ販売 | 保証期間延長 | 会員制 | 定期メンテナンス ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 3) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 価格均一化 | 安定供給 | 事業連携 | トータルサービス | 再生材料 | 安定仕入れ | 海外調達 | 高技能人材 | 独自技術 | 一括請負 | 特許保有 | 省エネルギー生産 | 現地調整加工 | 販売店販売 | チェーン展開 | タイアップ販売 | 保証期間延長 | 会員制 | 定期メンテナンス | 緊急対応制 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 4) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 精密 | 希少性 | 安定供給 | グローバル対応 | ブランド | 事業連携 | 再生材料 | 安定仕入れ | 海外調達 | 直接仕入れ | 高技能人材 | 現地調整加工 | 手作り生産 | 独自技術 | 受託生産 | 一括請負 | 製造小売 | 販売店販売 | チェーン展開 | タイアップ販売 | 保証期間延長 | 会員制 | 定期メンテナンス | 長期部品保有 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 5) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 信頼性 | 事業連携 | ロジスティクス | グローバル対応 | 観光資源活用 | 運転手確保 | 運転手教育 | 荷主関係強化 | 効率運行 | 保管業務 | 加工軽作業 | 販売店販売 | チェーン展開 | タイアップ販売 | 個別企画対応 | 電子マネー対応 | トレーサビリティ | 保証期間延長 | 会員制 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 6) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = トータルサービス | 独自サービス | セキュリティ対応 | クラウド対応 | グローバル対応 | ユーザビリティ | アウトソーシング | 海外調達 | 国際人材 | ビッグデータ活用 | パートナー企業 | グローバルネットワーク | 独自技術 | 先端技術 | パッケージ開発 | 特許保有 | 企画開発 | オフショア開発 | プロトタイピング ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 7) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 価格均一化 | 希少性 | 安定供給 | 多頻度配送 | オーガニック商材 | 機能性商材 | 高付加価値商材 | 商品ラインナップ | 独自商品 | 事業連携 | 農商工連携 | 検品体制 | ライフスタイル提案 | コミュニケーション | ノウハウ標準化 | 提案販売 | イベント企画 | 店内プロモーション | リテールサポート | チェーン展開 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+
+                    else if (selectedOption == 8) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = リボルビング | 商品ラインナップ | 商品鑑定力 | 紹介獲得 | 希少性 | 個別プラン | 提案販売 | 顧客課題分析 | ノウハウ標準化 | コミュニケーション | チェーン展開 | コンプライアンス管理 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 9) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 商品ラインナップ | ブランド | 鮮度 | 観光資源活用 | オーガニック食材 | 希少食材 | 機能性食材 | 高付加価値食材 | 高技能人材 | 自動化 | コミュニケーション | ノウハウ標準化 | ホスピタリティ | チェーン展開 | ノベルティ | リピーター化 | ポイントカード | メールマガジン | SNS活用 | 提携店舗 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+
+                    else if (selectedOption == 10) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 高付加価値サービス | 商品ラインナップ | オーナーサポート | 物件評価力 | 入居者募集 | 独自調達物件 | 希少性 | 独自技術 | 提案販売 | 顧客課題分析 | ノウハウ標準化 | コミュニケーション | チェーン展開 | 資金調達アドバイス | コンプライアンス管理 | 事業連携 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                
+                    //選択業界を増やすときはこのしたに書いていくのがいいかも！！
+                    //上のelse if文をコピペでいけます
+                    recognition.grammars = speechRecognitionList;
+
+
+
+                    console.log(selectedOption);
+                    recognition.start();
+                    //下の関数の呼び出し
+                    startrec();
+                    startButton.style.display = 'none';
+                    stopButton.style.display = 'inline-block';
+                    rec.style.display = 'inline-block';
+                    }
+                });
 
         //ストップボタンがクリックされた時の操作
         stopButton.addEventListener('click', () => {
