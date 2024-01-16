@@ -2,154 +2,186 @@
 {% extends "sumgpt/base.html" %}
 
 {% block title_block %}
-詳細
+index
 {% endblock %}
 
 {% block body_block %}
-<div class="m-5">
-    <h1 class="text-center m-4">要約の詳細</h1>
-    <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.sum }}</textarea>
-    <span class="badge rounded-pill text-bg-dark float-end">{{ sum_data.timestamp }}</span>
-    <button class="btn btn-danger" id="deleteButton">削除</button>
-    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        文字起こしの確認
-    </button>
-    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#saveDocsModal">
-        保存
-    </button>
-    <!--GoogleDriveへのファイル保存の結果を格納-->
-    
-    <a id="urlview" class="alert alert-light mt-3" style="display:none;" href="" target="_blank"></a>
-</div>
-
-<!-- 確認ダイアログ用モーダル -->
-<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteConfirmationModalLabel">削除の確認</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                本当に削除しますか？
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
-                <a href="{% url 'sumdel' sum_data.id %}" class="btn btn-danger">削除</a>
-            </div>
-        </div>
-    </div>
-</div>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <div class="mb-3">
+                <h1 class="bold-text text-center">SumGPT</h1>
+                <button id="startButton" class="btn btn-secondary">音声認識開始</button>
+                <button id="stopButton" class="btn btn-danger" style="display:none;">音声認識終了</button>
+                <button id="rec" class="btn btn-danger" type="button" disabled style="display:none;">
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    録音中
+                </button>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">文字起こしの確認</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.detail }}</textarea>
-            </div>
-        </div>
-    </div>
-</div>
+                {% comment %} 業界指定の実装 {% endcomment %}
+                <select id="inputState" class="form-select">
+                    <option selected>業界を指定</option>
+                    {% comment %} 下の[selectedOption]には、このvalueの値が入る {% endcomment %}
+                    <option value="1">農業・林業・漁業</option>
+                    <option value="2">建設業</option>
+                    <option value="3">電気・ガス・熱供給・水道業</option>
+                    <option value="4">製造業</option>
+                    <option value="5">運輸業</option>
+                    <option value="6">情報通信業</option>
+                    <option value="7">卸売・小売業</option>
+                    <option value="8">金融・保険業</option>
+                    <option value="9">飲食・宿泊業</option>
+                    <option value="10">不動産業</option></select>
 
 
-<div class="modal fade" id="saveDocsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="saveDocsModalLabel">保存</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p id="process">ファイル名を入力してください。(拡張子は不要です)</p>
-                <form action="" method="post" class="form-control" id="form">
-                    {% csrf_token %}
-                    <br>
-                    <p>ファイル名: <input type="text" name="filename" required="required" id="filename"></p>
-                    <!--↓表示されない要素 sum_data.idを格納-->
-                    <input type="hidden" name="pk" value="{{sum_data.id}}">
-                    <button type="button" id="drive-button" class="btn btn-secondary">GoogleDriveに保存</button>
-                    <button type="button" id="download-button" class="btn btn-secondary">ダウンロード</button>
-                </form>
+            <div class="mb-3">
+                <form method="post" action="{% url 'sp' %}">
+                {% csrf_token %}
+                <textarea name="data" id="re" class="form-control" cols="30" rows="10" readonly></textarea>
+                <button type="submit" id="sumButton" class="btn btn-secondary" style="display:none;">要約</button>
+            </form>
             </div>
+            <div id="transcription" class="mt-3"></div>
         </div>
     </div>
 </div>
 
 <script>
-    // 削除ボタンをクリックしたときに確認ダイアログを表示
-    document.getElementById('deleteButton').addEventListener('click', function () {
-        $('#deleteConfirmationModal').modal('show');
-    });
+        let isRecognizing = false;
+        //APIの初期設定
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'ja-JP';
+        recognition.interimResults = true;
+        recognition.continuous = true;
 
-    //docsの保存urlがあれば表示する
-    const urlview = document.getElementById("urlview")
-    if (urlview.textContent != ""){
-        urlview.setAttribute('href', urlview.textContent);
-        urlview.style.display='flex';
-    } 
+        //DOM要素の読み込み
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const rec = document.getElementById('rec');
+        const sumButton = document.getElementById('sumButton');
+        const re = document.getElementById('re');
 
-    //GoogleDriveに文書を保存するPOST
-    const form = document.getElementById("form")
-    const driveButton = document.getElementById("drive-button")
-    const process_msg = document.getElementById("process")
-    const filename = document.getElementById("filename")
-    const downloadButton = document.getElementById("download-button")
-    driveButton.onclick = () => {
-        const formData = new FormData(form)
-        const action = '{% url "docxToDrive" %}'
-        // 保存ボタンの無効化
-        driveButton.disable = false;
-        // 保存モーダルのテキストの書き換え
-        process_msg.textContent = "保存中です。"
-        const options = {
-            method: 'POST',
-            body: formData,
-        }
-        fetch(action, options).then((response) => {
-            return response.json();
-        }).then((data) => {
-            // 保存の可不可を表示
-            alert(data.msg, data.url);
-            //DocsのURLとリンクの更新
-            urlview.textContent = data.url;
-            urlview.setAttribute('href', data.url);
-            //保存ボタンの有効化
-            driveButton.disable = true;
-            //保存に失敗 かつ DBにURLがない場合非表示、違う場合は表示
-            urlview.style.display = data.url == "" && urlview.textContent == ""?'none':'flex'
-            process_msg.textContent = "ファイル名を入力してください。"
+        //スタートボタンがクリックされた時の操作
+        startButton.addEventListener('click', () => {
+            isRecognizing = false;
+            if (!isRecognizing) {
+
+
+                    //単語登録
+                    const grammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 決定 | 判断 | 理由 | 案件 | 否決 | 再検討 | 再調整 | 保留 | 資料 | 補足資料 | 参考意見 | 社長一任 | アサイン ;';
+
+                    const SpeechGrammarList = window.webkitSpeechGrammarList || window.SpeechGrammarList;
+                    const speechRecognitionList = new SpeechGrammarList();
+                    speechRecognitionList.addFromString(grammar, 1);
+
+                    //業界選択をした場合の処理
+                    const selectElement = document.getElementById("inputState");
+                    const selectedOption = selectElement.options[selectElement.selectedIndex].value;
+                    if (selectedOption == 1) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 価格均一化 | 希少性 | 安定供給 | ブランド | リサイクル | 再生材料・リサイクル材料 | 企業ネットワーク | 手作り生産 | 独自技術 | 有機栽培 | 受託生産 | 特許保有 | 販売店販売 | チェーン展開 | タイアップ販売 | サンプル販売 | 保証期間延長 | トレーサビリティ ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+
+                    else if (selectedOption == 2) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 価格均一化 | 独自技術 | 希少性 | 信頼性 | 高技能人材 | 再生材料・リサイクル材料 | 直接仕入れ | プレ加工生産 | 現場加工 | 独自技術 | 受託生産 | 一括請負 | 事業連携 | 中間検査 | 特許保有 | 独自営業力 | 提案販売 | 販売店販売 | チェーン展開 | タイアップ販売 | 保証期間延長 | 会員制 | 定期メンテナンス ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 3) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 価格均一化 | 安定供給 | 事業連携 | トータルサービス | 再生材料 | 安定仕入れ | 海外調達 | 高技能人材 | 独自技術 | 一括請負 | 特許保有 | 省エネルギー生産 | 現地調整加工 | 販売店販売 | チェーン展開 | タイアップ販売 | 保証期間延長 | 会員制 | 定期メンテナンス | 緊急対応制 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 4) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 精密 | 希少性 | 安定供給 | グローバル対応 | ブランド | 事業連携 | 再生材料 | 安定仕入れ | 海外調達 | 直接仕入れ | 高技能人材 | 現地調整加工 | 手作り生産 | 独自技術 | 受託生産 | 一括請負 | 製造小売 | 販売店販売 | チェーン展開 | タイアップ販売 | 保証期間延長 | 会員制 | 定期メンテナンス | 長期部品保有 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 5) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 信頼性 | 事業連携 | ロジスティクス | グローバル対応 | 観光資源活用 | 運転手確保 | 運転手教育 | 荷主関係強化 | 効率運行 | 保管業務 | 加工軽作業 | 販売店販売 | チェーン展開 | タイアップ販売 | 個別企画対応 | 電子マネー対応 | トレーサビリティ | 保証期間延長 | 会員制 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 6) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = トータルサービス | 独自サービス | セキュリティ対応 | クラウド対応 | グローバル対応 | ユーザビリティ | アウトソーシング | 海外調達 | 国際人材 | ビッグデータ活用 | パートナー企業 | グローバルネットワーク | 独自技術 | 先端技術 | パッケージ開発 | 特許保有 | 企画開発 | オフショア開発 | プロトタイピング ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 7) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 価格均一化 | 希少性 | 安定供給 | 多頻度配送 | オーガニック商材 | 機能性商材 | 高付加価値商材 | 商品ラインナップ | 独自商品 | 事業連携 | 農商工連携 | 検品体制 | ライフスタイル提案 | コミュニケーション | ノウハウ標準化 | 提案販売 | イベント企画 | 店内プロモーション | リテールサポート | チェーン展開 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+
+                    else if (selectedOption == 8) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = リボルビング | 商品ラインナップ | 商品鑑定力 | 紹介獲得 | 希少性 | 個別プラン | 提案販売 | 顧客課題分析 | ノウハウ標準化 | コミュニケーション | チェーン展開 | コンプライアンス管理 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                    
+                    else if (selectedOption == 9) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 商品ラインナップ | ブランド | 鮮度 | 観光資源活用 | オーガニック食材 | 希少食材 | 機能性食材 | 高付加価値食材 | 高技能人材 | 自動化 | コミュニケーション | ノウハウ標準化 | ホスピタリティ | チェーン展開 | ノベルティ | リピーター化 | ポイントカード | メールマガジン | SNS活用 | 提携店舗 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+
+                    else if (selectedOption == 10) {
+                        const customGrammar = '#JSGF V1.0 JIS ja; grammar numbers; public <numbers> = 高付加価値サービス | 商品ラインナップ | オーナーサポート | 物件評価力 | 入居者募集 | 独自調達物件 | 希少性 | 独自技術 | 提案販売 | 顧客課題分析 | ノウハウ標準化 | コミュニケーション | チェーン展開 | 資金調達アドバイス | コンプライアンス管理 | 事業連携 ;';
+                        speechRecognitionList.addFromString(customGrammar, 1);
+                        }
+                
+                    //選択業界を増やすときはこのしたに書いていくのがいいかも！！
+                    //上のelse if文をコピペでいけます
+                    recognition.grammars = speechRecognitionList;
+
+
+
+                    console.log(selectedOption);
+                    recognition.start();
+                    //下の関数の呼び出し
+                    startrec();
+                    startButton.style.display = 'none';
+                    stopButton.style.display = 'inline-block';
+                    rec.style.display = 'inline-block';
+                    }
+                });
+
+        //ストップボタンがクリックされた時の操作
+        stopButton.addEventListener('click', () => {
+            //下の関数の呼び出し
+            stoprec();
         });
 
-    }
+        function startrec() {
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+                let finalTranscript = '';
 
-    //DjangoサーバからWordファイルをダウンロード
-    downloadButton.onclick = () => {
-        const formData = new FormData(form)
-        const action = '{% url "docxDownload" %}'
-        const options = {
-            method: 'POST',
-            body: formData,
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const transcript = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        finalTranscript += transcript + '\n';
+                    } else {
+                        interimTranscript += transcript + ' ';
+                    }
+                }
+
+                document.getElementById('transcription').textContent = interimTranscript.trim();
+                re.value = (re.value + finalTranscript).trim() + "\n";
+    }
+}
+
+        function stoprec() {
+            recognition.stop();
+            startButton.style.display = 'inline-block';
+            stopButton.style.display = 'none';
+            rec.style.display = 'none';
+            isRecognizing = true;
+            if (re.value != '') {
+            sumButton.style.display = 'inline-block';
+            }
         }
-        fetch(action, options).then((response) => {
-            return response.blob();
-        }).then((data) => {
-            const url = window.URL.createObjectURL(data);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = filename.value? filename.value + ".docx" : "output.docx"
-            a.click();
-        });
-
-    }
-
-
 
 </script>
+
 
 {% endblock %}

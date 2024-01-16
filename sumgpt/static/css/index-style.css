@@ -143,7 +143,7 @@ button.btn1 {
     linear,
     left top,
     right top,
-    color-stop(40%, #3ce8ff),
+    color-stop(40%, #ff3cac),
     to(#562b7c)
   );
   background-image: -webkit-linear-gradient(left, #ff3cac 40%, #562b7c 100%);
