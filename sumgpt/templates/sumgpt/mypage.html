@@ -6,10 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
-{% load static %}
-<link id="styleSheet" rel="stylesheet" href="{% static 'css/MP-style.css' %}">
-
-<div id="container" class="m-5">
+<div class="m-5">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
@@ -31,7 +28,7 @@
                             <div class="col-4">
                                 <h4>要約一覧</h4>
                             </div>
-                            <div class="col-4" sum>
+                            <div class="col-4">
                                 <form method="get" role="search" class="d-flex">
                                     <input class="form-control me-2" type="search" name="search_query" placeholder="検索">
                                     <button class="btn btn-outline-secondary" type="submit"><i
@@ -49,18 +46,20 @@
                             </thead>
                             <tbody>
                                 {% for user_sum in user_sums %}
-                                <tr>
-                                    <td class="sum">{{ user_sum.timestamp|date:"Y-m-d" }}</td>
-                                    <td class="sum text-truncate">
-                                        {{ user_sum.sum|slice:":20" }}{% if user_sum.sum|length > 20 %}・・・{% endif %}
+                                <tr class="column">
+                                    <td>{{ user_sum.timestamp|date:"Y-m-d" }}
                                     </td>
-                                    <td class="sum">
-                                        <a href="{% url 'sum' user_sum.id %}" class="btn btn-outline-secondary btn-sm">
-                                            <i class="bi bi-card-text"></i>
-                                        </a>
+                                    <td class="text-truncate">
+                                        <div class="additional-content2">
+                                        {{ user_sum.sum|slice:":20" }}{% if user_sum.sum|length > 20 %}・・・{% endif %}
+                                    </div>
+                                        <div class="additional-content alert alert-secondary">
+                                                {{ user_sum.sum }}
+                                        </div>
+                                    </td>
+                                    <td><a href="{% url 'sum' user_sum.id %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-card-text"></i></a>
                                     </td>
                                 </tr>
-                                
                                 {% empty %}
                                 <tr>
                                     <td>none</td>
@@ -82,26 +81,26 @@
                     <table class="table table-striped">
                         <tbody>
                             <tr>
-                                <td class="sum">アカウント作成日</td>
-                                <td class="sum text-truncate">
+                                <td>アカウント作成日</td>
+                                <td class="text-truncate">
                                     {{ user.date_joined }}
                                 </td>
                             </tr>
                             <tr>
-                                <td class="sum">最終ログイン日</td>
-                                <td class="sum text-truncate">
+                                <td>最終ログイン日</td>
+                                <td class="text-truncate">
                                     {{ user.last_login }}
                                 </td>
                             </tr>
                             <tr>
-                                <td class="sum">ユーザー名</td>
-                                <td class="sum text-truncate">
+                                <td>ユーザー名</td>
+                                <td class="text-truncate">
                                     {{ user.username }}
                                 </td>
                             </tr>
                             <tr>
-                                <td class="sum">メールアドレス</td>
-                                <td class="sum text-truncate">
+                                <td>メールアドレス</td>
+                                <td class="text-truncate">
                                     {{ user.email }}
                                 </td>
                             </tr>
@@ -109,27 +108,27 @@
                     </table>
 
                     <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-secondary m-1" id="passchange" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             パスワード変更
                         </button>
-                        <a href="{% url 'logout' %}" class="btn btn-danger m-1" id="danger">ログアウト</a>
-                    </div>
-
-
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">パスワード変更</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body text-center" style="height: 350px;">
-                                    <iframe src="{% url 'passchange' %}"style="border: none; width: 100%; height: 100%;"></iframe>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">パスワード変更</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center" style="height: 350px;">
+                                        <iframe src="{% url 'passchange' %}"style="border: none; width: 100%; height: 100%;"></iframe>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="{% url 'logout' %}" class="btn btn-danger m-1">ログアウト</a>
+                    </div>
+
 
                     <div class="kakusi">
                         <div class="form-check form-switch">
@@ -144,7 +143,7 @@
         </div>
     </div>
 </div>
-
+</div>
 
 <script>
     // ページが読み込まれたときにダークモードの状態を取得
@@ -204,39 +203,5 @@
         }
     });
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // ページが読み込まれたときにダークモードの状態を取得
-        var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
-
-        // ダークモードスイッチのチェック状態を設定
-        document.getElementById('darkModeSwitch').checked = isDarkMode;
-
-        // ダークモードの適用
-        applyDarkMode(isDarkMode);
-
-        // ダークモードスイッチの変更イベントを監視
-        document.getElementById('darkModeSwitch').addEventListener('change', function () {
-            var darkModeEnabled = this.checked;
-            localStorage.setItem('darkMode', darkModeEnabled ? 'enabled' : 'disabled');
-            // ダークモードの適用
-            applyDarkMode(darkModeEnabled);
-        });
-
-        // 適用するCSSを変更する関数
-        function applyDarkMode(darkModeEnabled) {
-            var styleSheet = document.getElementById('styleSheet');
-            if (darkModeEnabled) {
-                document.body.setAttribute('data-bs-theme', 'dark');
-                styleSheet.href = "{% static 'css/MP-darkstyle.css' %}";
-            } else {
-                document.body.removeAttribute('data-bs-theme');
-                styleSheet.href = "{% static 'css/MP-style.css' %}";
-            }
-        }
-    });
-</script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script src="{% static 'js/SR-style.js' %}"></script>
 
 {% endblock %}

@@ -6,28 +6,25 @@
 {% endblock %}
 
 {% block body_block %}
-
-{% load static %}
-<script>
-    var isDarkMode = localStorage.getItem('darkMode') === 'enabled';
-    var basePath = "{% static 'css/' %}";
-
-    // ダークモードが有効ならダークモード用のCSSを、無効なら通常のCSSを読み込む
-    if (isDarkMode) {
-        document.write('<link rel="stylesheet" href="' + basePath + 'sum-darkstyle.css">');
-    } else {
-        document.write('<link rel="stylesheet" href="' + basePath + 'sum-style.css">');
-    }
-</script>
 <div class="m-5">
     <h1 class="text-center m-4">要約の詳細</h1>
     <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.sum }}</textarea>
-    <span class="badge rounded-pill text-light float-end" id="time">{{ sum_data.timestamp }}</span>
-    <button class="btn btn-danger DB" id="deleteButton">削除</button>
+    <span class="badge rounded-pill text-bg-dark float-end">{{ sum_data.timestamp }}</span>
+    <button class="btn btn-danger" id="deleteButton">削除</button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        文字起こしの確認
+    </button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#saveDocsModal">
+        保存
+    </button>
+    <!--GoogleDriveへのファイル保存の結果を格納-->
+    
+    <a id="urlview" class="alert alert-light mt-3" style="display:none;" href="" target="_blank"></a>
 </div>
 
 <!-- 確認ダイアログ用モーダル -->
-<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -38,8 +35,47 @@
                 本当に削除しますか？
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cansel">キャンセル</button>
-                <a href="{% url 'sumdel' sum_data.id %}" class="btn btn-danger DB">削除</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                <a href="{% url 'sumdel' sum_data.id %}" class="btn btn-danger">削除</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">文字起こしの確認</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.detail }}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="saveDocsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="saveDocsModalLabel">保存</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="process">ファイル名を入力してください。(拡張子は不要です)</p>
+                <form action="" method="post" class="form-control" id="form">
+                    {% csrf_token %}
+                    <br>
+                    <p>ファイル名: <input type="text" name="filename" required="required" id="filename"></p>
+                    <!--↓表示されない要素 sum_data.idを格納-->
+                    <input type="hidden" name="pk" value="{{sum_data.id}}">
+                    <button type="button" id="drive-button" class="btn btn-secondary">GoogleDriveに保存</button>
+                    <button type="button" id="download-button" class="btn btn-secondary">ダウンロード</button>
+                </form>
             </div>
         </div>
     </div>
@@ -50,6 +86,70 @@
     document.getElementById('deleteButton').addEventListener('click', function () {
         $('#deleteConfirmationModal').modal('show');
     });
+
+    //docsの保存urlがあれば表示する
+    const urlview = document.getElementById("urlview")
+    if (urlview.textContent != ""){
+        urlview.setAttribute('href', urlview.textContent);
+        urlview.style.display='flex';
+    } 
+
+    //GoogleDriveに文書を保存するPOST
+    const form = document.getElementById("form")
+    const driveButton = document.getElementById("drive-button")
+    const process_msg = document.getElementById("process")
+    const filename = document.getElementById("filename")
+    const downloadButton = document.getElementById("download-button")
+    driveButton.onclick = () => {
+        const formData = new FormData(form)
+        const action = '{% url "docxToDrive" %}'
+        // 保存ボタンの無効化
+        driveButton.disable = false;
+        // 保存モーダルのテキストの書き換え
+        process_msg.textContent = "保存中です。"
+        const options = {
+            method: 'POST',
+            body: formData,
+        }
+        fetch(action, options).then((response) => {
+            return response.json();
+        }).then((data) => {
+            // 保存の可不可を表示
+            alert(data.msg, data.url);
+            //DocsのURLとリンクの更新
+            urlview.textContent = data.url;
+            urlview.setAttribute('href', data.url);
+            //保存ボタンの有効化
+            driveButton.disable = true;
+            //保存に失敗 かつ DBにURLがない場合非表示、違う場合は表示
+            urlview.style.display = data.url == "" && urlview.textContent == ""?'none':'flex'
+            process_msg.textContent = "ファイル名を入力してください。"
+        });
+
+    }
+
+    //DjangoサーバからWordファイルをダウンロード
+    downloadButton.onclick = () => {
+        const formData = new FormData(form)
+        const action = '{% url "docxDownload" %}'
+        const options = {
+            method: 'POST',
+            body: formData,
+        }
+        fetch(action, options).then((response) => {
+            return response.blob();
+        }).then((data) => {
+            const url = window.URL.createObjectURL(data);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename.value? filename.value + ".docx" : "output.docx"
+            a.click();
+        });
+
+    }
+
+
+
 </script>
 
 {% endblock %}
