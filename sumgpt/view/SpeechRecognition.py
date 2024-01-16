@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from ..models import Sum
+from ..models import Sum, WordCloud_m
 from ..word_cloud import WC #wordcloud用関数
 import openai
 import os
@@ -46,14 +46,21 @@ def sp(request):
         #wordcloud用の処理
         WC(user, input_data, sum_instance)
 
-        return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
+        # WordCloud_mモデルの関連データも同時に取得（prefetch_relatedを使用）
+        wordcloud_image = WordCloud_m.objects.filter(sum=sum_data)
+
+        return render(request, 'sumgpt/sum.html', {'sum_data': sum_data, 'wordcloud_image':wordcloud_image})
+
     else:
         return render(request, 'sumgpt/sp.html')
 
 @login_required
 def sum(request, pk):
     sum_data = get_object_or_404(Sum, pk=pk)  # SumモデルとデータのIDを指定
-    return render(request, 'sumgpt/sum.html', {'sum_data': sum_data})
+    # WordCloud_mモデルの関連データも同時に取得（prefetch_relatedを使用）
+    wordcloud_image = WordCloud_m.objects.filter(sum=sum_data)
+
+    return render(request, 'sumgpt/sum.html', {'sum_data': sum_data, 'wordcloud_image':wordcloud_image})
 
 #お知らせの削除
 @login_required

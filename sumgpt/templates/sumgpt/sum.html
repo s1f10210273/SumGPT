@@ -11,6 +11,10 @@
     <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.sum }}</textarea>
     <span class="badge rounded-pill text-bg-dark float-end">{{ sum_data.timestamp }}</span>
     <button class="btn btn-danger" id="deleteButton">削除</button>
+    {% for wordcloud_instance in wordcloud_image %}
+        <img src="{{ wordcloud_instance.image.url }}" alt="Word Cloud Image">
+    {% endfor %}
+        
 </div>
 
 <!-- 確認ダイアログ用モーダル -->
