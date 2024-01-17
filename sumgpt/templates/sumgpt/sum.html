@@ -21,6 +21,7 @@
 <div class="m-5">
     <h1 class="text-center m-4">要約の詳細</h1>
     <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.sum }}</textarea>
+
     <span class="badge rounded-pill text-bg-dark float-end" id="timestamp">{{ sum_data.timestamp }}</span>
     <button class="btn btn-danger DB" id="deleteButton">削除</button>
     <button type="button" class="btn btn-secondary DB" id="time2" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -32,6 +33,10 @@
     <!--GoogleDriveへのファイル保存の結果を格納-->
     
     <a id="urlview" class="alert alert-light mt-3" style="display:none;" href="" target="_blank"></a>
+    {% for wordcloud_instance in wordcloud_image %}
+        <img src="{{ wordcloud_instance.image.url }}" alt="Word Cloud Image">
+    {% endfor %}
+
 </div>
 
 <!-- 確認ダイアログ用モーダル -->
