@@ -2,7 +2,7 @@
 {% extends "sumgpt/base.html" %}
 
 {% block title_block %}
-詳細
+要約の詳細
 {% endblock %}
 
 {% block body_block %}
@@ -19,7 +19,17 @@
     }
 </script>
 <div class="m-5">
-    <h1 class="text-center m-4">要約の詳細</h1>
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <a id="urlview" class="alert alert-light mt-3" style="display:none;" href="" target="_blank"></a>
+    
+            {% for wordcloud_instance in wordcloud_image %}
+                <div class="col-md-6 text-center">
+                    <img src="{{ wordcloud_instance.image.url }}" alt="Word Cloud Image" class="img-fluid">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
     <textarea class="form-control" style="height: 100px" disabled>{{ sum_data.sum }}</textarea>
 
     <span class="badge rounded-pill text-bg-dark float-end" id="timestamp">{{ sum_data.timestamp }}</span>
@@ -32,10 +42,7 @@
     </button>
     <!--GoogleDriveへのファイル保存の結果を格納-->
     
-    <a id="urlview" class="alert alert-light mt-3" style="display:none;" href="" target="_blank"></a>
-    {% for wordcloud_instance in wordcloud_image %}
-        <img src="{{ wordcloud_instance.image.url }}" alt="Word Cloud Image">
-    {% endfor %}
+    
 
 </div>
 

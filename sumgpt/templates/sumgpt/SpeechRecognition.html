@@ -54,7 +54,7 @@ index
             <div class="mb-3">
                 <form method="post" action="{% url 'sp' %}">
                 {% csrf_token %}
-                <textarea name="data" id="re" class="form-control" cols="30" rows="10" readonly></textarea>
+                <textarea name="data" id="re" class="form-control" cols="30" rows="10"></textarea>
                 <button type="submit" id="sumButton" class="btn btn-secondary" style="display:none;">要約</button>
             </form>
             </div>
