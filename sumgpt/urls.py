@@ -19,6 +19,9 @@ urlpatterns = [
     path('sum_del/<int:pk>/', SpeechRecognition.sum_del, name='sumdel'),
     path('api/docx_download/', drive.docx_download, name='docxDownload'),
     path('api/docx_to_drive', drive.docx_to_drive, name='docxToDrive'),
+    path('generate_wordcloud', views.generate_wordcloud, name="generate_wordcloud"), #再利用用。おそらく本番は使用しない。詳しくはviews
+    path('test_wordcloud/<int:id>/', views.show_wordcloud_M, name="show_wordcloud_M"), #wordcloudテスト用モデルのid。指定されたidの画像を表示する。
+    path('wordcloud/<int:id>/', views.show_wordcloud, name="show_wordcloud"), #wordcloud用モデルのid。指定されたidの画像を表示する。
 ]
 
 #文字起こし機能のファイル削除用
